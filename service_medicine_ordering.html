@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HelloDoc - Order Medicine Service</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* Medicine Ordering Service Page Specific Styles */
+        .service-hero {
+            background: linear-gradient(135deg, var(--primary-dark) 0%, var(--bg-medium) 100%);
+            padding: 80px 0;
+            color: var(--text-white);
+            text-align: center;
+        }
+        
+        .service-hero h1 {
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+        
+        .service-hero p {
+            font-size: 1.2rem;
+            max-width: 800px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+        
+        .service-content {
+            background: var(--bg-light);
+            padding: 80px 0;
+            color: var(--text-dark);
+        }
+        
+        .service-overview {
+            background: white;
+            border-radius: 20px;
+            padding: 3rem;
+            margin-bottom: 3rem;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+        
+        .service-overview h2 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--text-dark);
+            margin-bottom: 1.5rem;
+        }
+        
+        .service-overview p {
+            font-size: 1.1rem;
+            line-height: 1.7;
+            color: var(--text-dark);
+            margin-bottom: 2rem;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .service-features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin: 3rem 0;
+        }
+        
+        .feature-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .feature-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+        
+        .feature-card h3 {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: var(--text-dark);
+            margin-bottom: 1rem;
+        }
+        
+        .feature-card p {
+            color: var(--text-grey);
+            line-height: 1.6;
+        }
+        
+        .ordering-process {
+            background: white;
+            border-radius: 20px;
+            padding: 3rem;
+            margin-bottom: 3rem;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+        
+        .ordering-process h2 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--text-dark);
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+        
+        .process-steps {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+        
+        .process-step {
+            text-align: center;
+            padding: 1.5rem;
+        }
+        
+        .step-number {
+            background: var(--accent-blue);
+            color: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin: 0 auto 1rem;
+        }
+        
+        .process-step h3 {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--text-dark);
+            margin-bottom: 1rem;
+        }
+        
+        .process-step p {
+            color: var(--text-grey);
+            line-height: 1.6;
+        }
+        
+        .safety-info {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            border-radius: 20px;
+            padding: 3rem;
+            margin-bottom: 3rem;
+            text-align: center;
+        }
+        
+        .safety-info h2 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--text-dark);
+            margin-bottom: 1.5rem;
+        }
+        
+        .safety-info p {
+            font-size: 1.1rem;
+            line-height: 1.7;
+            color: var(--text-dark);
+            margin-bottom: 2rem;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .safety-features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+        
+        .safety-feature {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 15px;
+            box-shadow: 0 3px 15px rgba(0,0,0,0.1);
+        }
+        
+        .safety-feature h3 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--text-dark);
+            margin-bottom: 0.5rem;
+        }
+        
+        .safety-feature p {
+            color: var(--text-grey);
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+        
+        .cta-section {
+            background: linear-gradient(135deg, var(--accent-blue) 0%, var(--primary-light) 100%);
+            color: white;
+            text-align: center;
+            padding: 4rem 0;
+            margin-top: 3rem;
+        }
+        
+        .cta-section h2 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+        
+        .cta-section p {
+            font-size: 1.1rem;
+            margin-bottom: 2rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .cta-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        
+        .cta-btn {
+            background: white;
+            color: var(--accent-blue);
+            padding: 15px 30px;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+        
+        .cta-btn:hover {
+            background: transparent;
+            color: white;
+            border-color: white;
+            transform: translateY(-3px);
+        }
+        
+        .cta-btn.secondary {
+            background: transparent;
+            color: white;
+            border-color: white;
+        }
+        
+        .cta-btn.secondary:hover {
+            background: white;
+            color: var(--accent-blue);
+        }
+        
+        @media (max-width: 768px) {
+            .service-hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .service-overview, .ordering-process, .safety-info {
+                padding: 2rem;
+            }
+            
+            .service-overview h2, .ordering-process h2, .safety-info h2 {
+                font-size: 2rem;
+            }
+            
+            .cta-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .cta-btn {
+                width: 100%;
+                max-width: 300px;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <div class="logo">
+                <img src="images/main/1.svg" alt="HelloDoc Logo" class="logo-icon">
+                HelloDoc
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="services.html">Services</a></li>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="donations.html">Donations</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </nav>
+            <a href="login.html" class="account-btn">MY ACCOUNT</a>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="service-hero">
+        <div class="container">
+            <h1>Order Medicine</h1>
+            <p>Browse and order your prescriptions with home delivery options for convenience and safety. Our verified sellers ensure quality and authenticity.</p>
+        </div>
+    </section>
+
+    <!-- Service Content -->
+    <section class="service-content">
+        <div class="container">
+            <div class="service-overview">
+                <h2>Safe and Convenient Medicine Delivery</h2>
+                <p>Our medicine ordering service connects you with verified pharmaceutical sellers who provide authentic medications with secure home delivery. Whether you need prescription drugs or over-the-counter medications, we ensure quality, safety, and convenience.</p>
+                
+                <div class="service-features">
+                    <div class="feature-card">
+                        <div class="feature-icon">✅</div>
+                        <h3>Verified Sellers</h3>
+                        <p>All our pharmaceutical partners are thoroughly vetted and licensed.</p>
+                    </div>
+                    
+                    <div class="feature-card">
+                        <div class="feature-icon">🏠</div>
+                        <h3>Home Delivery</h3>
+                        <p>Get your medications delivered directly to your doorstep.</p>
+                    </div>
+                    
+                    <div class="feature-card">
+                        <div class="feature-icon">💊</div>
+                        <h3>Prescription Management</h3>
+                        <p>Upload and manage your prescriptions securely online.</p>
+                    </div>
+                    
+                    <div class="feature-card">
+                        <div class="feature-icon">🔒</div>
+                        <h3>Secure Payments</h3>
+                        <p>Multiple payment options with secure transaction processing.</p>
+                    </div>
+                    
+                    <div class="feature-card">
+                        <div class="feature-icon">📱</div>
+                        <h3>Easy Ordering</h3>
+                        <p>Simple interface to browse, order, and track your medications.</p>
+                    </div>
+                    
+                    <div class="feature-card">
+                        <div class="feature-icon">📞</div>
+                        <h3>24/7 Support</h3>
+                        <p>Customer support available around the clock for any questions.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="ordering-process">
+                <h2>How to Order</h2>
+                <div class="process-steps">
+                    <div class="process-step">
+                        <div class="step-number">1</div>
+                        <h3>Browse Products</h3>
+                        <p>Search for your medications or browse our comprehensive catalog.</p>
+                    </div>
+                    
+                    <div class="process-step">
+                        <div class="step-number">2</div>
+                        <h3>Upload Prescription</h3>
+                        <p>For prescription drugs, upload your doctor's prescription securely.</p>
+                    </div>
+                    
+                    <div class="process-step">
+                        <div class="step-number">3</div>
+                        <h3>Add to Cart</h3>
+                        <p>Select your medications and add them to your shopping cart.</p>
+                    </div>
+                    
+                    <div class="process-step">
+                        <div class="step-number">4</div>
+                        <h3>Checkout & Pay</h3>
+                        <p>Review your order and complete payment securely.</p>
+                    </div>
+                    
+                    <div class="process-step">
+                        <div class="step-number">5</div>
+                        <h3>Track Delivery</h3>
+                        <p>Monitor your order status and track delivery in real-time.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="safety-info">
+                <h2>Your Safety is Our Priority</h2>
+                <p>We understand the importance of medication safety. That's why we've implemented strict quality control measures and work only with verified, licensed pharmaceutical suppliers.</p>
+                
+                <div class="safety-features">
+                    <div class="safety-feature">
+                        <h3>Quality Assurance</h3>
+                        <p>All medications are sourced from authorized distributors and manufacturers.</p>
+                    </div>
+                    
+                    <div class="safety-feature">
+                        <h3>Temperature Control</h3>
+                        <p>Medications are transported in temperature-controlled environments to maintain efficacy.</p>
+                    </div>
+                    
+                    <div class="safety-feature">
+                        <h3>Expiry Monitoring</h3>
+                        <p>We ensure all medications have sufficient shelf life before delivery.</p>
+                    </div>
+                    
+                    <div class="safety-feature">
+                        <h3>Secure Packaging</h3>
+                        <p>Discreet and secure packaging to protect your privacy and medication integrity.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section">
+        <div class="container">
+            <h2>Ready to Order Your Medicine?</h2>
+            <p>Start browsing our medication catalog and enjoy the convenience of home delivery for all your pharmaceutical needs.</p>
+            <div class="cta-buttons">
+                <a href="medicine_ordering.html" class="cta-btn">Start Shopping Now</a>
+                <a href="services.html" class="cta-btn secondary">View All Services</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-newsletter">
+                    <div class="logo">
+                        <img src="images/main/1.svg" alt="HelloDoc Logo" class="logo-icon">
+                        HelloDoc
+                    </div>
+                    <p>Stay in the loop and sign up for the HelloDoc Newsletter</p>
+                    <div class="newsletter-form">
+                        <input type="email" placeholder="Enter your email">
+                        <button type="submit">→</button>
+                    </div>
+                </div>
+                
+                <div class="footer-links">
+                    <div class="link-column">
+                        <h4>Company</h4>
+                        <ul>
+                            <li><a href="index.html">Home</a></li>
+                            <li><a href="services.html">Services</a></li>
+                            <li><a href="about.html">About</a></li>
+                            <li><a href="contact.html">Contact</a></li>
+                        </ul>
+                    </div>
+                    <div class="link-column">
+                        <h4>Documentation</h4>
+                        <ul>
+                            <li><a href="help_centre.html">Help Centre</a></li>
+                            <li><a href="contact.html">Contact</a></li>
+                            <li><a href="faq.html">FAQ</a></li>
+                            <li><a href="privacy_policy.html">Privacy Policy</a></li>
+                        </ul>
+                    </div>
+                    <div class="link-column">
+                        <h4>Social</h4>
+                        <ul>
+                            <li><a href="#">Facebook</a></li>
+                            <li><a href="#">Instagram</a></li>
+                            <li><a href="#">Youtube</a></li>
+                            <li><a href="#">Twitter</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>© HelloDoc All Rights Reserved 2025</p>
+                <a href="#">Terms & Conditions</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Fixed Chatbot -->
+    <div class="fixed-chatbot">
+        <div class="chatbot-bubble">Need help finding medications?</div>
+        <a href="ai_assistant.html" class="chatbot-icon">
+            <img src="images/main/7.png" alt="AI Assistant">
+        </a>
+    </div>
+
+    <script src="js/script.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const accountBtn = document.querySelector('.account-btn');
+            const loggedInUser = JSON.parse(sessionStorage.getItem('loggedInUser'));
+            
+            if (loggedInUser) {
+                if (loggedInUser.role === 'admin') {
+                    accountBtn.textContent = 'ADMIN DASHBOARD';
+                    accountBtn.href = 'admin.html';
+                } else {
+                    accountBtn.textContent = `Hi, ${loggedInUser.firstName.toUpperCase()}`;
+                    accountBtn.href = 'user_dashboard.html';
+                }
+
+                // Add logout option
+                const nav = document.querySelector('header nav ul');
+                const logoutLi = document.createElement('li');
+                const logoutLink = document.createElement('a');
+                logoutLink.href = '#';
+                logoutLink.textContent = 'LOGOUT';
+                logoutLink.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    sessionStorage.removeItem('loggedInUser');
+                    alert('Logged out successfully.');
+                    window.location.href = 'index.html';
+                });
+                logoutLi.appendChild(logoutLink);
+                nav.appendChild(logoutLi);
+            } else {
+                accountBtn.textContent = 'MY ACCOUNT';
+                accountBtn.href = 'login.html';
+            }
+        });
+    </script>
+</body>
+</html>

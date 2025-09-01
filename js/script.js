@@ -2,6 +2,7 @@
 
 document.addEventListener('DOMContentLoaded', function() {
     // Initialize all components
+    initGravityFallAnimations();
     initTestimonialSlider();
     initCategoryFilters();
     initNewsletterForm();
@@ -489,6 +490,40 @@ document.addEventListener('DOMContentLoaded', function() {
         card.classList.add('fade-in');
     });
 });
+
+// Gravity Fall Animation Function
+function initGravityFallAnimations() {
+    const elements = document.querySelectorAll('h1, h2, h3, .hero-content, .service-card, .testimonial-card, .cta-button, .hero-buttons');
+    
+    elements.forEach((element, index) => {
+        // Reset opacity to 0 initially
+        element.style.opacity = '0';
+        
+        // Add animation class based on position
+        if (index % 4 === 0) {
+            element.classList.add('gravity-fall');
+        } else if (index % 4 === 1) {
+            element.classList.add('gravity-fall-left');
+        } else if (index % 4 === 2) {
+            element.classList.add('gravity-fall-right');
+        } else {
+            element.classList.add('gravity-fall-bottom');
+        }
+        
+        // Add delay for staggered effect
+        if (index % 5 === 0) {
+            element.classList.add('gravity-fall-delay-1');
+        } else if (index % 5 === 1) {
+            element.classList.add('gravity-fall-delay-2');
+        } else if (index % 5 === 2) {
+            element.classList.add('gravity-fall-delay-3');
+        } else if (index % 5 === 3) {
+            element.classList.add('gravity-fall-delay-4');
+        } else {
+            element.classList.add('gravity-fall-delay-5');
+        }
+    });
+}
 
 // Function to create a test admin account if it doesn't exist
 function createTestAdminAccount() {
