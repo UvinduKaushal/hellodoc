@@ -19,61 +19,25 @@ document.addEventListener('DOMContentLoaded', function() {
 
     if (loginTestUserBtn) {
         loginTestUserBtn.addEventListener('click', function() {
-            fetch('backend/auth.php', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                    action: 'login',
-                    email: 'user@test.com',
-                    password: 'user123'
-                })
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.success) {
-                    sessionStorage.setItem('loggedInUser', JSON.stringify(data.user));
-                    alert('Logged in as Test User!');
-                    window.location.href = 'index.php'; // Redirect to home page
-                } else {
-                    alert('Login failed for Test User: ' + data.message);
-                }
-            })
-            .catch(error => {
-                console.error('Error during test user login:', error);
-                alert('An error occurred during test user login.');
-            });
+            const users = JSON.parse(localStorage.getItem('helldocUsers')) || [];
+            const testUser = users.find(u => u.email === 'user@test.com');
+            if (testUser) {
+                sessionStorage.setItem('loggedInUser', JSON.stringify(testUser));
+                alert('Logged in as Test User!');
+                window.location.href = 'index.html';
+            }
         });
     }
 
     if (loginTestAdminBtn) {
         loginTestAdminBtn.addEventListener('click', function() {
-            fetch('backend/auth.php', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                    action: 'login',
-                    email: 'admin@test.com',
-                    password: 'admin123'
-                })
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.success) {
-                    sessionStorage.setItem('loggedInUser', JSON.stringify(data.user));
-                    alert('Logged in as Test Admin!');
-                    window.location.href = 'admin.php'; // Redirect to admin dashboard
-                } else {
-                    alert('Login failed for Test Admin: ' + data.message);
-                }
-            })
-            .catch(error => {
-                console.error('Error during test admin login:', error);
-                alert('An error occurred during test admin login.');
-            });
+            const users = JSON.parse(localStorage.getItem('helldocUsers')) || [];
+            const testAdmin = users.find(u => u.email === 'admin@test.com');
+            if (testAdmin) {
+                sessionStorage.setItem('loggedInUser', JSON.stringify(testAdmin));
+                alert('Logged in as Test Admin!');
+                window.location.href = 'admin.html';
+            }
         });
     }
 
@@ -81,19 +45,19 @@ document.addEventListener('DOMContentLoaded', function() {
         logoutBtn.addEventListener('click', function() {
             sessionStorage.removeItem('loggedInUser');
             alert('Logged out!');
-            window.location.href = 'index.php';
+            window.location.href = 'index.html';
         });
     }
 
     if (goToUserDashboardBtn) {
         goToUserDashboardBtn.addEventListener('click', function() {
-            window.location.href = 'user_dashboard.php';
+            window.location.href = 'user_dashboard.html';
         });
     }
 
     if (goToAdminDashboardBtn) {
         goToAdminDashboardBtn.addEventListener('click', function() {
-            window.location.href = 'admin.php';
+            window.location.href = 'admin.html';
         });
     }
 });
@@ -277,78 +241,20 @@ function initMobileMenu() {
 
 // Cart Functionality (for medicine ordering page)
 function initCart() {
-    const loggedInUser = JSON.parse(sessionStorage.getItem('loggedInUser'));
-    let cart = []; // Initialize empty cart, will be loaded from backend if user logged in
+    let cart = JSON.parse(localStorage.getItem('helldocCart')) || [];
     let cartTotal = 0;
     let cartItemCount = 0;
 
-    async function saveCart() {
-        if (!loggedInUser) {
-            localStorage.setItem('helldocCart', JSON.stringify(cart)); // Fallback for non-logged-in users
-            updateCartDisplay();
-            return;
-        }
-
-        try {
-            const response = await fetch('backend/data.php', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                    action: 'saveCart',
-                    userId: loggedInUser.email, // Using email as a unique ID
-                    cartData: cart
-                })
-            });
-            const data = await response.json();
-            if (!data.success) {
-                console.error('Failed to save cart to backend:', data.message);
-            }
-            updateCartDisplay();
-        } catch (error) {
-            console.error('Error saving cart:', error);
-            localStorage.setItem('helldocCart', JSON.stringify(cart)); // Fallback to local storage on error
-            updateCartDisplay();
-        }
-    }
-
-    async function loadCart() {
-        if (!loggedInUser) {
-            cart = JSON.parse(localStorage.getItem('helldocCart')) || [];
-            updateCartDisplay();
-            return;
-        }
-
-        try {
-            const response = await fetch('backend/data.php', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                    action: 'getCart',
-                    userId: loggedInUser.email
-                })
-            });
-            const data = await response.json();
-            if (data.success) {
-                cart = data.cart;
-            } else {
-                console.error('Failed to load cart from backend:', data.message);
-                cart = JSON.parse(localStorage.getItem('helldocCart')) || []; // Fallback
-            }
-            updateCartDisplay();
-        } catch (error) {
-            console.error('Error loading cart:', error);
-            cart = JSON.parse(localStorage.getItem('helldocCart')) || []; // Fallback to local storage on error
-            updateCartDisplay();
-        }
+    function saveCart() {
+        localStorage.setItem('helldocCart', JSON.stringify(cart));
+        updateCartDisplay();
     }
 
     function updateCartTotalAndCount() {
         cartTotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
         cartItemCount = cart.reduce((count, item) => count + item.quantity, 0);
-        const cartTotalElement = document.getElementById('cartTotal');
-        const cartItemCountElement = document.getElementById('cartItemCount');
-        if (cartTotalElement) cartTotalElement.textContent = cartTotal.toFixed(2) + ' Rs';
-        if (cartItemCountElement) cartItemCountElement.textContent = cartItemCount;
+        document.getElementById('cartTotal').textContent = cartTotal.toFixed(2) + ' Rs';
+        document.getElementById('cartItemCount').textContent = cartItemCount;
     }
     
     function addToCart(name, price, imageSrc) {
@@ -456,43 +362,31 @@ function initCart() {
     });
 
     // Checkout button functionality
-    document.querySelector('.checkout-btn').addEventListener('click', async function() {
-        if (cart.length === 0) {
-            alert('Your cart is empty. Please add items before checking out.');
-            return;
-        }
-
-        if (!loggedInUser) {
-            alert('Please log in to proceed with checkout.');
-            window.location.href = 'login.php';
-            return;
-        }
-
-        const orderData = {
-            userId: loggedInUser.email,
-            items: cart,
-            total: cartTotal,
-            timestamp: new Date().toISOString()
-        };
-
-        try {
-            // Store order data in session storage before redirecting for payment processing
-            sessionStorage.setItem('helldocLastOrder', JSON.stringify(orderData));
-
-            // Clear cart immediately after placing the order
-            cart = [];
-            await saveCart(); // Save empty cart to backend
+    document.querySelector('.checkout-btn').addEventListener('click', function() {
+        if (cart.length > 0) {
+            // Store cart data in session storage before redirecting
+            sessionStorage.setItem('helldocLastOrder', JSON.stringify({ items: cart, total: cartTotal, timestamp: new Date().toISOString() }));
+            
+            cart = []; // Clear cart immediately
+            saveCart(); // Save empty cart
             toggleCart(); // Close cart after checkout
 
-            window.location.href = 'payment_processing.php'; // Redirect to payment processing page
-        } catch (error) {
-            console.error('Error during checkout:', error);
-            alert('An error occurred during checkout. Please try again.');
+            window.location.href = 'payment_processing.html'; // Redirect to payment processing page
+        } else {
+            alert('Your cart is empty. Please add items before checking out.');
         }
     });
     
     // Initialize cart display on page load
-    loadCart(); // Load cart from backend or local storage
+    updateCartTotalAndCount();
+    updateCartDisplay();
+
+    window.toggleCart = function() {
+        const cartSection = document.getElementById('cartSection');
+        if (cartSection) {
+            cartSection.classList.toggle('active');
+        }
+    }
 }
 
 // Toggle Cart Function
@@ -516,7 +410,7 @@ function donate() {
     // Store a flag for donation payment simulation
     sessionStorage.setItem('isDonationPayment', 'true');
     
-    window.location.href = 'payment_processing.php'; // Redirect to payment processing page
+    window.location.href = 'payment_processing.html'; // Redirect to payment processing page
 }
 
 // Search Functionality
@@ -598,74 +492,46 @@ document.addEventListener('DOMContentLoaded', function() {
 
 // Function to create a test admin account if it doesn't exist
 function createTestAdminAccount() {
+    let users = JSON.parse(localStorage.getItem('helldocUsers')) || [];
     const testAdminEmail = 'admin@test.com';
-    
-    fetch('backend/auth.php', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-            action: 'register',
-            userData: {
-                firstName: 'Test',
-                lastName: 'Admin',
-                email: testAdminEmail,
-                phone: '0712345678',
-                birthdate: '1990-01-01',
-                gender: 'male',
-                role: 'admin',
-                password: 'admin123' // Password will be hashed by PHP
-            }
-        })
-    })
-    .then(response => response.json())
-    .then(data => {
-        if (data.success) {
-            console.log('Test admin account created or already exists.');
-        } else {
-            console.error('Error creating test admin account:', data.message);
-        }
-    })
-    .catch(error => {
-        console.error('Error during test admin account creation fetch:', error);
-    });
+
+    if (!users.some(user => user.email === testAdminEmail)) {
+        const testAdminUser = {
+            firstName: 'Test',
+            lastName: 'Admin',
+            email: testAdminEmail,
+            phone: '0712345678',
+            birthdate: '1990-01-01',
+            gender: 'male',
+            role: 'admin',
+            password: 'admin123'
+        };
+        users.push(testAdminUser);
+        localStorage.setItem('helldocUsers', JSON.stringify(users));
+        console.log('Test admin account created: admin@test.com / admin123');
+    }
 }
 
 // Function to create a test regular user account if it doesn't exist
 function createTestUserAccount() {
+    let users = JSON.parse(localStorage.getItem('helldocUsers')) || [];
     const testUserEmail = 'user@test.com';
 
-    fetch('backend/auth.php', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-            action: 'register',
-            userData: {
-                firstName: 'Test',
-                lastName: 'User',
-                email: testUserEmail,
-                phone: '0778765432',
-                birthdate: '1995-05-05',
-                gender: 'female',
-                role: 'user',
-                password: 'user123' // Password will be hashed by PHP
-            }
-        })
-    })
-    .then(response => response.json())
-    .then(data => {
-        if (data.success) {
-            console.log('Test user account created or already exists.');
-        } else {
-            console.error('Error creating test user account:', data.message);
-        }
-    })
-    .catch(error => {
-        console.error('Error during test user account creation fetch:', error);
-    });
+    if (!users.some(user => user.email === testUserEmail)) {
+        const testUser = {
+            firstName: 'Test',
+            lastName: 'User',
+            email: testUserEmail,
+            phone: '0778765432',
+            birthdate: '1995-05-05',
+            gender: 'female',
+            role: 'user',
+            password: 'user123'
+        };
+        users.push(testUser);
+        localStorage.setItem('helldocUsers', JSON.stringify(users));
+        console.log('Test user account created: user@test.com / user123');
+    }
 }
 
 // Chatbot functionality (if exists)
