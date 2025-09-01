@@ -1,0 +1,545 @@
+<?php $pageTitle = "AI Medical Assistant"; include 'header.php'; ?>
+    <style>
+        /* AI Assistant Page Specific Styles */
+        .chatbot-hero {
+            background: linear-gradient(135deg, var(--primary-dark) 0%, var(--bg-medium) 100%);
+            padding: 60px 0;
+            color: var(--text-white);
+            text-align: center;
+        }
+        
+        .chatbot-hero h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+        
+        .chatbot-hero p {
+            font-size: 1.1rem;
+            max-width: 600px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+        
+        .chatbot-container {
+            background: var(--bg-light);
+            padding: 40px 0;
+            min-height: calc(100vh - 200px);
+        }
+        
+        .chatbot-wrapper {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+        
+        .chatbot-header {
+            background: var(--btn-primary);
+            color: white;
+            padding: 1.5rem 2rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        
+        .chatbot-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            overflow: hidden;
+        }
+
+        .chatbot-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .chatbot-info h3 {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+        }
+        
+        .chatbot-info p {
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+        
+        .chat-messages {
+            height: 400px;
+            overflow-y: auto;
+            padding: 2rem;
+            background: #f8f9fa;
+        }
+        
+        .message {
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+        }
+        
+        .message.user {
+            flex-direction: row-reverse;
+        }
+        
+        .message-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            flex-shrink: 0;
+            overflow: hidden;
+        }
+
+        .message-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .message.user .message-avatar {
+            background: var(--accent-blue);
+            color: white;
+        }
+        
+        .message.bot .message-avatar {
+            background: var(--btn-primary);
+            color: white;
+        }
+        
+        .message-content {
+            background: white;
+            padding: 1rem 1.5rem;
+            border-radius: 20px;
+            max-width: 70%;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .message.user .message-content {
+            background: var(--accent-blue);
+            color: white;
+        }
+        
+        .message.bot .message-content {
+            background: white;
+            color: var(--text-dark);
+        }
+        
+        .message-time {
+            font-size: 0.9rem;
+            color: var(--text-dark);
+            margin-top: 0.5rem;
+            text-align: right;
+            font-weight: 500;
+        }
+        
+        .message.user .message-time {
+            text-align: left;
+        }
+        
+        .chat-input {
+            padding: 1.5rem 2rem;
+            background: white;
+            border-top: 1px solid #e0e0e0;
+        }
+        
+        .input-group {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+        
+        .message-input {
+            flex: 1;
+            padding: 12px 20px;
+            border: 2px solid #e0e0e0;
+            border-radius: 25px;
+            font-size: 1rem;
+            background: white;
+            color: var(--text-dark);
+            transition: border-color 0.3s ease;
+        }
+        
+        .message-input:focus {
+            outline: none;
+            border-color: var(--btn-primary);
+        }
+        
+        .send-btn {
+            background: var(--btn-primary);
+            color: white;
+            border: none;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .send-btn:hover {
+            background: var(--primary-medium);
+        }
+        
+        .send-btn:disabled {
+            background: var(--text-dark);
+            cursor: not-allowed;
+        }
+        
+        .quick-replies {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+            margin-top: 1rem;
+        }
+        
+        .quick-reply {
+            background: var(--bg-light);
+            color: var(--text-dark);
+            border: 1px solid #e0e0e0;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .quick-reply:hover {
+            background: var(--btn-primary);
+            color: white;
+            border-color: var(--btn-primary);
+        }
+        
+        .typing-indicator {
+            display: none;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 1rem 1.5rem;
+            background: white;
+            border-radius: 20px;
+            max-width: 70%;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .typing-dots {
+            display: flex;
+            gap: 0.25rem;
+        }
+        
+        .typing-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--text-grey);
+            animation: typing 1.4s infinite ease-in-out;
+        }
+        
+        .typing-dot:nth-child(1) { animation-delay: -0.32s; }
+        .typing-dot:nth-child(2) { animation-delay: -0.16s; }
+        
+        @keyframes typing {
+            0%, 80%, 100% { transform: scale(0); }
+            40% { transform: scale(1); }
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .chatbot-hero h1 {
+                font-size: 2rem;
+            }
+            
+            .chatbot-wrapper {
+                margin: 0 1rem;
+            }
+            
+            .chat-messages {
+                height: 350px;
+                padding: 1rem;
+            }
+            
+            .message-content {
+                max-width: 85%;
+            }
+            
+            .chat-input {
+                padding: 1rem;
+            }
+            
+            .input-group {
+                gap: 0.5rem;
+            }
+            
+            .message-input {
+                padding: 10px 15px;
+            }
+            
+            .send-btn {
+                width: 45px;
+                height: 45px;
+                font-size: 1rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .chatbot-hero h1 {
+                font-size: 1.8rem;
+            }
+            
+            .chatbot-hero p {
+                font-size: 1rem;
+            }
+            
+            .chat-messages {
+                height: 300px;
+            }
+            
+            .message-content {
+                max-width: 90%;
+                padding: 0.75rem 1rem;
+            }
+            
+            .quick-replies {
+                gap: 0.25rem;
+            }
+            
+            .quick-reply {
+                padding: 6px 12px;
+                font-size: 0.8rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Hero Section -->
+    <section class="chatbot-hero">
+        <div class="container">
+            <h1>AI Medical Assistant</h1>
+            <p>Get instant answers to your health questions with our intelligent AI assistant. Available 24/7 to provide reliable medical information.</p>
+        </div>
+    </section>
+
+    <!-- Chatbot Container -->
+    <section class="chatbot-container">
+        <div class="container">
+            <div class="chatbot-wrapper">
+                <div class="chatbot-header">
+                    <div class="chatbot-avatar"><img src="images/services/aibot.webp" alt="AI Assistant"></div>
+                    <div class="chatbot-info">
+                        <h3>HelloDoc AI Assistant</h3>
+                        <p>Online • Ready to help</p>
+                    </div>
+                </div>
+                
+                <div class="chat-messages" id="chatMessages">
+                    <div class="message bot">
+                        <div class="message-avatar"><img src="images/services/aibot.webp" alt="AI Assistant"></div>
+                        <div class="message-content">
+                            <p>Hello! I'm your HelloDoc AI Assistant. I'm here to help answer your health questions and provide reliable medical information. How can I assist you today?</p>
+                            <div class="message-time">Just now</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="typing-indicator" id="typingIndicator">
+                    <div class="message-avatar"><img src="images/services/aibot.webp" alt="AI Assistant"></div>
+                    <div class="typing-dots">
+                        <div class="typing-dot"></div>
+                        <div class="typing-dot"></div>
+                        <div class="typing-dot"></div>
+                    </div>
+                </div>
+                
+                <div class="chat-input">
+                    <div class="input-group">
+                        <input type="text" class="message-input" id="messageInput" placeholder="Type your health question here..." maxlength="500">
+                        <button class="send-btn" id="sendBtn">→</button>
+                    </div>
+                    <div class="quick-replies">
+                        <div class="quick-reply" onclick="sendQuickReply('What are the symptoms of diabetes?')">Diabetes symptoms</div>
+                        <div class="quick-reply" onclick="sendQuickReply('How to lower blood pressure?')">Blood pressure</div>
+                        <div class="quick-reply" onclick="sendQuickReply('Common cold remedies')">Cold remedies</div>
+                        <div class="quick-reply" onclick="sendQuickReply('When to see a doctor?')">When to see doctor</div>
+                        <div class="quick-reply" onclick="sendQuickReply('Call a Doctor Now')">Call a Doctor Now</div>
+                        <div class="quick-reply" onclick="sendQuickReply('Order Medicine')">Order Medicine</div>
+                        <div class="quick-reply" onclick="sendQuickReply('What can you help with?')">Help</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script src="js/script.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Dynamic navigation logic
+            const accountBtn = document.querySelector('.account-btn');
+            const loggedInUser = JSON.parse(sessionStorage.getItem('loggedInUser'));
+            
+            if (loggedInUser) {
+                if (loggedInUser.role === 'admin') {
+                    accountBtn.textContent = 'ADMIN DASHBOARD';
+                    accountBtn.href = 'admin.php';
+                } else {
+                    accountBtn.textContent = `Hi, ${loggedInUser.firstName.toUpperCase()}`;
+                    accountBtn.href = 'user_dashboard.php'; // Placeholder for user profile page
+                }
+
+                // Add logout option
+                const nav = document.querySelector('header nav ul');
+                const logoutLi = document.createElement('li');
+                const logoutLink = document.createElement('a');
+                logoutLink.href = '#';
+                logoutLink.textContent = 'LOGOUT';
+                logoutLink.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    sessionStorage.removeItem('loggedInUser');
+                    alert('Logged out successfully.');
+                    window.location.href = 'index.php';
+                });
+                logoutLi.appendChild(logoutLink);
+                nav.appendChild(logoutLi);
+            } else {
+                accountBtn.textContent = 'MY ACCOUNT';
+                accountBtn.href = 'login.php';
+            }
+
+            // Chatbot functionality
+            const chatMessages = document.getElementById('chatMessages');
+            const messageInput = document.getElementById('messageInput');
+            const sendBtn = document.getElementById('sendBtn');
+            const typingIndicator = document.getElementById('typingIndicator');
+
+            // Sample responses for common health questions
+            const responses = {
+                'diabetes': 'Common symptoms of diabetes include increased thirst, frequent urination, extreme hunger, unexplained weight loss, fatigue, blurred vision, and slow-healing sores. If you experience these symptoms, please consult a healthcare provider.',
+                'blood pressure': 'To lower blood pressure naturally: reduce salt intake, exercise regularly, maintain a healthy weight, limit alcohol, quit smoking, manage stress, and eat a balanced diet rich in fruits and vegetables.',
+                'cold': 'For common cold relief: rest, stay hydrated, use over-the-counter medications for symptoms, try honey for cough, use saline nasal drops, and get plenty of sleep. Most colds resolve within 7-10 days.',
+                'doctor': 'You should see a doctor if you experience: severe pain, high fever (over 103°F), difficulty breathing, chest pain, severe headache, persistent vomiting, or symptoms that worsen or don\'t improve after several days.',
+                'headache': 'Common headache remedies include: rest in a quiet, dark room, over-the-counter pain relievers, staying hydrated, applying cold or warm compresses, and managing stress. If headaches are severe or frequent, consult a doctor.',
+                'fever': 'For fever management: rest, stay hydrated, take acetaminophen or ibuprofen, use cool compresses, and monitor temperature. Seek medical attention if fever is over 103°F or persists for more than 3 days.',
+                'back pain': 'For back pain relief: rest, apply ice or heat, gentle stretching, over-the-counter pain relievers, and maintaining good posture. If pain is severe or persistent, consult a healthcare provider.',
+                'anxiety': 'For anxiety management: practice deep breathing, exercise regularly, get adequate sleep, limit caffeine and alcohol, try meditation or yoga, and consider talking to a mental health professional if symptoms persist.',
+                'appointment': 'You can book an appointment through our \'Call a Doctor Now\' service. Would you like me to redirect you to the appointments page?',
+                'medicine': 'You can order medicine through our dedicated medicine ordering service. Would you like me to redirect you to the medicine ordering page?',
+                'help': 'I can help you with symptoms, remedies, finding a doctor, or ordering medicine. Please ask a specific question or choose a quick reply option.'
+            };
+
+            function addMessage(content, isUser = false) {
+                const messageDiv = document.createElement('div');
+                messageDiv.className = `message ${isUser ? 'user' : 'bot'}`;
+                
+                const avatar = document.createElement('div');
+                avatar.className = 'message-avatar';
+                avatar.innerHTML = isUser ? '👤' : '<img src="images/services/aibot.webp" alt="AI Assistant">';
+                
+                const messageContent = document.createElement('div');
+                messageContent.className = 'message-content';
+                messageContent.innerHTML = `<p>${content}</p><div class="message-time">${new Date().toLocaleTimeString()}</div>`;
+                
+                messageDiv.appendChild(avatar);
+                messageDiv.appendChild(messageContent);
+                
+                chatMessages.appendChild(messageDiv);
+                chatMessages.scrollTop = chatMessages.scrollHeight;
+            }
+
+            function showTyping() {
+                typingIndicator.style.display = 'flex';
+                chatMessages.scrollTop = chatMessages.scrollHeight;
+            }
+
+            function hideTyping() {
+                typingIndicator.style.display = 'none';
+            }
+
+            function getResponse(userMessage) {
+                const lowerMessage = userMessage.toLowerCase();
+                
+                // Check for keywords in the message
+                for (const [keyword, response] of Object.entries(responses)) {
+                    if (lowerMessage.includes(keyword)) {
+                        return response;
+                    }
+                }
+                
+                // Default responses
+                const defaultResponses = [
+                    "I understand you're asking about health. While I can provide general information, it's important to consult with a healthcare professional for personalized medical advice. Is there anything specific you'd like to know?",
+                    "That's an interesting health question. For the most accurate and personalized advice, I recommend speaking with your doctor or healthcare provider. Can I help you find information on common symptoms or conditions?",
+                    "I can provide general health information, but for specific medical concerns, please consult with a qualified healthcare professional. I can offer insights into various health topics, just ask!",
+                    "Thank you for your question. Remember that I provide general information only and cannot replace professional medical advice. If you have a specific health concern, I recommend seeking a doctor's opinion.",
+                    "My purpose is to provide general health information and guidance. If you're experiencing a medical emergency, please seek immediate professional medical attention."
+                ];
+                
+                return defaultResponses[Math.floor(Math.random() * defaultResponses.length)];
+            }
+
+            function sendMessage() {
+                const message = messageInput.value.trim();
+                if (!message) return;
+                
+                // Add user message
+                addMessage(message, true);
+                messageInput.value = '';
+                sendBtn.disabled = true;
+                
+                // Show typing indicator
+                showTyping();
+                
+                // Simulate AI response delay
+                setTimeout(() => {
+                    hideTyping();
+                    const response = getResponse(message);
+                    addMessage(response);
+                    sendBtn.disabled = false;
+                    messageInput.focus();
+                }, 1500 + Math.random() * 1000);
+            }
+
+            function sendQuickReply(text) {
+                messageInput.value = text;
+                sendMessage();
+                if (text === 'Call a Doctor Now') {
+                    setTimeout(() => {
+                        window.location.href = 'appointments.php'; // Redirect to appointments page
+                    }, 1000);
+                } else if (text === 'Order Medicine') {
+                    setTimeout(() => {
+                        window.location.href = 'medicine_ordering.php'; // Redirect to medicine ordering page
+                    }, 1000);
+                }
+            }
+
+            // Event listeners
+            sendBtn.addEventListener('click', sendMessage);
+            messageInput.addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') {
+                    sendMessage();
+                }
+            });
+
+            messageInput.addEventListener('input', () => {
+                sendBtn.disabled = !messageInput.value.trim();
+            });
+
+            // Focus on input when page loads
+            messageInput.focus();
+        });
+    </script>
+<?php include 'footer.php'; ?>

@@ -1,0 +1,420 @@
+<?php $pageTitle = "Help Our Cause by DONATING to US!"; include 'header.php'; ?>
+    <style>
+        /* Donations Page Specific Styles */
+        .donations-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            min-height: calc(100vh - 80px);
+        }
+        
+        .donations-left {
+            background: var(--bg-light);
+            padding: 4rem 3rem;
+            color: var(--text-dark);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .donations-left::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><path d="M50 20c-16.5 0-30 13.5-30 30s13.5 30 30 30 30-13.5 30-30-13.5-30-30-30zm0 50c-11 0-20-9-20-20s9-20 20-20 20 9 20 20-9 20-20 20z" fill="%23e0e0e0" opacity="0.3"/></svg>') repeat;
+            background-size: 100px 100px;
+            opacity: 0.1;
+            z-index: 1;
+        }
+        
+        .donations-left-content {
+            position: relative;
+            z-index: 2;
+        }
+        
+        .donations-left h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 2rem;
+            line-height: 1.2;
+        }
+        
+        .donations-left h1 .highlight {
+            color: var(--accent-blue);
+            font-style: italic;
+            text-transform: uppercase;
+        }
+        
+        .donations-left p {
+            font-size: 1.2rem;
+            line-height: 1.7;
+            margin-bottom: 2rem;
+            color: var(--text-dark);
+            font-weight: 500;
+        }
+        
+        .donations-left h2 {
+            font-size: 1.8rem;
+            font-weight: 600;
+            color: var(--accent-blue);
+            font-style: italic;
+            margin-bottom: 2rem;
+        }
+        
+        .product-cards {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+        
+        .product-card {
+            background: white;
+            border-radius: 15px;
+            padding: 1.5rem;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            transition: transform 0.3s ease;
+        }
+        
+        .product-card:hover {
+            transform: translateY(-3px);
+        }
+        
+        .product-image {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, var(--accent-light) 0%, var(--bg-light) 100%);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+        }
+        
+        .product-info {
+            flex: 1;
+        }
+        
+        .product-name {
+            font-weight: 600;
+            color: var(--text-dark);
+            margin-bottom: 0.5rem;
+        }
+        
+        .product-price {
+            font-weight: 700;
+            color: var(--text-dark);
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .product-discount {
+            color: var(--text-dark);
+            font-size: 1rem;
+            font-weight: 500;
+        }
+        
+        .add-to-cart-btn {
+            background: var(--btn-light);
+            color: var(--text-dark);
+            border: none;
+            padding: 10px 20px;
+            border-radius: 20px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        
+        .add-to-cart-btn:hover {
+            background: var(--btn-accent);
+            color: white;
+        }
+        
+        .donations-right {
+            background: var(--btn-primary);
+            padding: 4rem 3rem;
+            color: var(--text-white);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .donations-right::before {
+            content: 'EVERY click makes a DIFFERENCE!';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            font-weight: 700;
+            color: rgba(255,255,255,0.1);
+            text-align: center;
+            transform: rotate(-45deg);
+            white-space: nowrap;
+            z-index: 1;
+        }
+        
+        .donations-right-content {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+        }
+        
+        .donations-right h2 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 3rem;
+            text-transform: uppercase;
+        }
+        
+        .progress-container {
+            background: white;
+            border-radius: 15px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            color: var(--text-dark);
+        }
+        
+        .progress-bar {
+            width: 100%;
+            height: 20px;
+            background: #e0e0e0;
+            border-radius: 10px;
+            overflow: hidden;
+            margin-bottom: 1rem;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: var(--accent-blue);
+            width: 75%;
+            border-radius: 10px;
+            transition: width 0.3s ease;
+        }
+        
+        .progress-labels {
+            display: flex;
+            justify-content: space-between;
+            font-size: 1rem;
+            color: var(--text-dark);
+            font-weight: 500;
+        }
+        
+        .progress-labels .goal {
+            color: var(--status-error);
+            font-weight: 600;
+        }
+        
+        .donation-cta {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 2rem;
+        }
+        
+        .donate-btn {
+            background: var(--btn-primary);
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            border-radius: 25px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+        
+        .donate-btn:hover {
+            background: var(--primary-medium);
+            transform: translateY(-2px);
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .donations-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .donations-left,
+            .donations-right {
+                padding: 2rem 1.5rem;
+            }
+            
+            .donations-left h1,
+            .donations-right h2 {
+                font-size: 2rem;
+            }
+            
+            .donations-right::before {
+                font-size: 1.5rem;
+                transform: rotate(-30deg);
+            }
+            
+            .product-card {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .product-image {
+                width: 60px;
+                height: 60px;
+                font-size: 1.5rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .donations-left h1,
+            .donations-right h2 {
+                font-size: 1.8rem;
+            }
+            
+            .donations-left,
+            .donations-right {
+                padding: 1.5rem 1rem;
+            }
+            
+            .progress-container {
+                padding: 1.5rem;
+            }
+            
+            .donate-btn {
+                padding: 12px 30px;
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Donations Content -->
+    <div class="donations-container">
+        <!-- Left Panel -->
+        <div class="donations-left">
+            <div class="donations-left-content">
+                <h1>Help our Cause by <span class="highlight">DONATING</span> to US!</h1>
+                <p>Every gift brings vital care closer to someone in need. Your donation today can help a grandparent get their medication, a neighbor access a doctor's advice, or a loved one receive emergency support.</p>
+                
+                <h2>Or help us by purchasing from us!</h2>
+                
+                <div class="product-cards">
+                    <div class="product-card">
+                        <div class="product-image">💊</div>
+                        <div class="product-info">
+                            <div class="product-name">Item 1</div>
+                            <div class="product-price">250.00 Rs</div>
+                            <div class="product-discount">30% off</div>
+                        </div>
+                        <button class="add-to-cart-btn">Add to cart</button>
+                    </div>
+                    
+                    <div class="product-card">
+                        <div class="product-image">💊</div>
+                        <div class="product-info">
+                            <div class="product-name">Item 2</div>
+                            <div class="product-price">350.00 Rs</div>
+                            <div class="product-discount">25% off</div>
+                        </div>
+                        <button class="add-to-cart-btn">Add to cart</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Right Panel -->
+        <div class="donations-right">
+            <div class="donations-right-content">
+                <h2>EVERY click makes a DIFFERENCE!</h2>
+                
+                <div class="progress-container">
+                    <div class="progress-bar">
+                        <div class="progress-fill"></div>
+                    </div>
+                    <div class="progress-labels">
+                        <span>Current amount</span>
+                        <span class="goal">Goal</span>
+                    </div>
+                </div>
+                
+                <div class="donation-cta">
+                    Donate to us so we can reach our goal!
+                </div>
+                
+                <button class="donate-btn" onclick="donate()">Click to Donate</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Fixed Chatbot -->
+    <div class="fixed-chatbot">
+        <div class="chatbot-bubble">Hi! Want some assistance?</div>
+        <a href="ai_assistant.php" class="chatbot-icon">
+            <img src="images/main/7.png" alt="AI Assistant">
+        </a>
+    </div>
+
+    <script src="js/script.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Dynamic navigation logic (already present, ensuring it remains first)
+            const accountBtn = document.querySelector('.account-btn');
+            const loggedInUser = JSON.parse(sessionStorage.getItem('loggedInUser'));
+            
+            if (loggedInUser) {
+                if (loggedInUser.role === 'admin') {
+                    accountBtn.textContent = 'ADMIN DASHBOARD';
+                    accountBtn.href = 'admin.php';
+                } else {
+                    accountBtn.textContent = `Hi, ${loggedInUser.firstName.toUpperCase()}`;
+                    accountBtn.href = 'user_dashboard.php'; // Placeholder for user profile page
+                }
+
+                // Add logout option
+                const nav = document.querySelector('header nav ul');
+                const logoutLi = document.createElement('li');
+                const logoutLink = document.createElement('a');
+                logoutLink.href = '#';
+                logoutLink.textContent = 'LOGOUT';
+                logoutLink.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    sessionStorage.removeItem('loggedInUser');
+                    alert('Logged out successfully.');
+                    window.location.href = 'index.php';
+                });
+                logoutLi.appendChild(logoutLink);
+                nav.appendChild(logoutLi);
+            } else {
+                accountBtn.textContent = 'MY ACCOUNT';
+                accountBtn.href = 'login.php';
+            }
+
+            // Donation functionality
+            // The donate() function is now defined in js/script.js
+            // window.donate = function() {
+            //     alert('Redirecting to secure payment portal...');
+            //     window.location.href = 'https://www.fakepaymentgateway.com/donate'; // Placeholder for payment portal
+            // };
+
+            // Add to cart functionality (already present, ensuring it remains)
+            const addToCartButtons = document.querySelectorAll('.add-to-cart-btn');
+            addToCartButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    this.textContent = 'Added!';
+                    this.style.background = 'var(--status-success)';
+                    this.style.color = 'white';
+                    
+                    setTimeout(() => {
+                        this.textContent = 'Add to cart';
+                        this.style.background = 'var(--btn-light)';
+                        this.style.color = 'var(--text-dark)';
+                    }, 1000);
+                });
+            });
+        });
+    </script>
+<?php include 'footer.php'; ?>
