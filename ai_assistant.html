@@ -337,8 +337,7 @@
     <header>
         <div class="container">
             <div class="logo">
-                <img src="images/main/1.svg" alt="HelloDoc Logo" class="logo-icon">
-                HelloDoc
+                <img src="images/main/3.png" alt="HelloDoc Logo" class="logo-icon">
             </div>
             <nav>
                 <ul>
@@ -347,6 +346,7 @@
                     <li><a href="about.html">About</a></li>
                     <li><a href="donations.html">Donations</a></li>
                     <li><a href="contact.html">Contact</a></li>
+                    <li><a href="ai_assistant.html">AI Assistant</a></li>
                 </ul>
             </nav>
             <a href="login.html" class="account-btn">MY ACCOUNT</a>
@@ -398,13 +398,13 @@
                         <button class="send-btn" id="sendBtn">→</button>
                     </div>
                     <div class="quick-replies">
-                        <div class="quick-reply" onclick="sendQuickReply('What are the symptoms of diabetes?')">Diabetes symptoms</div>
-                        <div class="quick-reply" onclick="sendQuickReply('How to lower blood pressure?')">Blood pressure</div>
-                        <div class="quick-reply" onclick="sendQuickReply('Common cold remedies')">Cold remedies</div>
-                        <div class="quick-reply" onclick="sendQuickReply('When to see a doctor?')">When to see doctor</div>
+                        <div class="quick-reply" onclick="sendQuickReply('diabetes')">Diabetes symptoms</div>
+                        <div class="quick-reply" onclick="sendQuickReply('blood pressure')">Blood pressure</div>
+                        <div class="quick-reply" onclick="sendQuickReply('cold')">Cold remedies</div>
+                        <div class="quick-reply" onclick="sendQuickReply('doctor')">When to see doctor</div>
                         <div class="quick-reply" onclick="sendQuickReply('Call a Doctor Now')">Call a Doctor Now</div>
                         <div class="quick-reply" onclick="sendQuickReply('Order Medicine')">Order Medicine</div>
-                        <div class="quick-reply" onclick="sendQuickReply('What can you help with?')">Help</div>
+                        <div class="quick-reply" onclick="sendQuickReply('help')">Help</div>
                     </div>
                 </div>
             </div>
@@ -417,8 +417,7 @@
             <div class="footer-content">
                 <div class="footer-newsletter">
                     <div class="logo">
-                        <img src="images/main/1.svg" alt="HelloDoc Logo" class="logo-icon">
-                        HelloDoc
+                        <img src="images/main/3.png" alt="HelloDoc Logo" class="logo-icon">
                     </div>
                     <p>Stay in the loop and sign up for the HelloDoc Newsletter</p>
                     <div class="newsletter-form">
@@ -518,7 +517,14 @@
                 'anxiety': 'For anxiety management: practice deep breathing, exercise regularly, get adequate sleep, limit caffeine and alcohol, try meditation or yoga, and consider talking to a mental health professional if symptoms persist.',
                 'appointment': 'You can book an appointment through our \'Call a Doctor Now\' service. Would you like me to redirect you to the appointments page?',
                 'medicine': 'You can order medicine through our dedicated medicine ordering service. Would you like me to redirect you to the medicine ordering page?',
-                'help': 'I can help you with symptoms, remedies, finding a doctor, or ordering medicine. Please ask a specific question or choose a quick reply option.'
+                'help': 'I can help you with symptoms, remedies, finding a doctor, or ordering medicine. Please ask a specific question or choose a quick reply option.',
+                'choking': '🚨 EMERGENCY: If you or someone is choking, call emergency services IMMEDIATELY (119 in Sri Lanka). For conscious adults: Perform the Heimlich maneuver - stand behind the person, wrap your arms around their waist, make a fist above their navel, and give quick upward thrusts. For infants: Hold face down on your forearm, give 5 back blows between shoulder blades, then 5 chest thrusts. Seek immediate medical attention!',
+                'choke': '🚨 EMERGENCY: If you or someone is choking, call emergency services IMMEDIATELY (119 in Sri Lanka). For conscious adults: Perform the Heimlich maneuver - stand behind the person, wrap your arms around their waist, make a fist above their navel, and give quick upward thrusts. For infants: Hold face down on your forearm, give 5 back blows between shoulder blades, then 5 chest thrusts. Seek immediate medical attention!',
+                'emergency': '🚨 For medical emergencies, call 119 (Sri Lanka emergency services) immediately. If you\'re experiencing chest pain, difficulty breathing, severe bleeding, or loss of consciousness, do not wait - seek immediate medical attention. Your safety is our priority.',
+                'heart attack': '🚨 EMERGENCY: If you suspect a heart attack, call 119 IMMEDIATELY. Symptoms include chest pain, shortness of breath, nausea, lightheadedness, and pain in arms, neck, or jaw. Do not drive yourself - call emergency services or have someone take you to the hospital immediately.',
+                'stroke': '🚨 EMERGENCY: If you suspect a stroke, call 119 IMMEDIATELY. Remember FAST: Face drooping, Arm weakness, Speech difficulty, Time to call emergency services. Every minute counts in stroke treatment.',
+                'bleeding': 'For bleeding: Apply direct pressure with a clean cloth, elevate the injured area if possible, and seek medical attention for severe bleeding, bleeding that doesn\'t stop after 10 minutes of pressure, or if the wound is deep or dirty.',
+                'burn': 'For minor burns: Cool the burn under cold running water for 10-20 minutes, cover with sterile gauze, and take pain relievers if needed. Seek medical attention for burns larger than 3 inches, burns on face/hands/feet, or if the burn appears white or charred.'
             };
 
             function addMessage(content, isUser = false) {
@@ -594,16 +600,30 @@
             }
 
             function sendQuickReply(text) {
-                messageInput.value = text;
-                sendMessage();
+                console.log('Quick reply clicked:', text); // Debug log
+                
+                // Add user message immediately
+                addMessage(text, true);
+                
+                // Show typing indicator
+                showTyping();
+                
+                // Simulate AI response delay
+                setTimeout(() => {
+                    hideTyping();
+                    const response = getResponse(text);
+                    addMessage(response);
+                }, 1000);
+                
+                // Handle special redirects
                 if (text === 'Call a Doctor Now') {
                     setTimeout(() => {
-                        window.location.href = 'appointments.html'; // Redirect to appointments page
-                    }, 1000);
+                        window.location.href = 'appointments.html';
+                    }, 2000);
                 } else if (text === 'Order Medicine') {
                     setTimeout(() => {
-                        window.location.href = 'medicine_ordering.html'; // Redirect to medicine ordering page
-                    }, 1000);
+                        window.location.href = 'medicine_ordering.html';
+                    }, 2000);
                 }
             }
 

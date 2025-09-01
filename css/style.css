@@ -34,101 +34,545 @@
     --status-error: #F44336;
 }
 
-/* Gravity Fall Animation */
-@keyframes gravityFall {
+/* Multiple Animation Types for Different Pages */
+
+/* Page 1: Index - Floating Bubbles Effect */
+@keyframes floatBubble {
     0% {
         opacity: 0;
-        transform: translateY(-100px) rotateX(90deg);
+        transform: translateY(100px) scale(0.3) rotate(0deg);
     }
     50% {
-        opacity: 0.7;
-        transform: translateY(20px) rotateX(45deg);
+        opacity: 0.8;
+        transform: translateY(-20px) scale(1.1) rotate(180deg);
     }
     100% {
         opacity: 1;
-        transform: translateY(0) rotateX(0deg);
+        transform: translateY(0) scale(1) rotate(360deg);
     }
 }
 
-@keyframes gravityFallLeft {
+@keyframes floatBubbleLeft {
     0% {
         opacity: 0;
-        transform: translateX(-100px) rotateY(90deg);
+        transform: translateX(-100px) scale(0.3) rotate(-180deg);
     }
     50% {
-        opacity: 0.7;
-        transform: translateX(20px) rotateY(45deg);
+        opacity: 0.8;
+        transform: translateX(20px) scale(1.1) rotate(90deg);
     }
     100% {
         opacity: 1;
-        transform: translateX(0) rotateY(0deg);
+        transform: translateX(0) scale(1) rotate(0deg);
     }
 }
 
-@keyframes gravityFallRight {
+@keyframes floatBubbleRight {
     0% {
         opacity: 0;
-        transform: translateX(100px) rotateY(-90deg);
+        transform: translateX(100px) scale(0.3) rotate(180deg);
     }
     50% {
-        opacity: 0.7;
-        transform: translateX(-20px) rotateY(-45deg);
+        opacity: 0.8;
+        transform: translateX(-20px) scale(1.1) rotate(-90deg);
     }
     100% {
         opacity: 1;
-        transform: translateX(0) rotateY(0deg);
+        transform: translateX(0) scale(1) rotate(0deg);
     }
 }
 
-@keyframes gravityFallBottom {
+@keyframes floatBubbleBottom {
     0% {
         opacity: 0;
-        transform: translateY(100px) rotateX(-90deg);
+        transform: translateY(-100px) scale(0.3) rotate(90deg);
     }
     50% {
-        opacity: 0.7;
-        transform: translateY(-20px) rotateX(-45deg);
+        opacity: 0.8;
+        transform: translateY(20px) scale(1.1) rotate(270deg);
     }
     100% {
         opacity: 1;
-        transform: translateY(0) rotateX(0deg);
+        transform: translateY(0) scale(1) rotate(360deg);
     }
 }
 
-.gravity-fall {
-    animation: gravityFall 1.2s ease-out forwards;
+/* Page 2: Appointments - Typewriter Effect */
+@keyframes typewriter {
+    0% {
+        opacity: 0;
+        transform: translateY(0) scale(0.8);
+        clip-path: inset(0 100% 0 0);
+    }
+    50% {
+        opacity: 0.8;
+        transform: translateY(0) scale(1.05);
+        clip-path: inset(0 50% 0 0);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+        clip-path: inset(0 0% 0 0);
+    }
 }
 
-.gravity-fall-left {
-    animation: gravityFallLeft 1.2s ease-out forwards;
+@keyframes typewriterLeft {
+    0% {
+        opacity: 0;
+        transform: translateX(0) scale(0.8);
+        clip-path: inset(0 0 0 100%);
+    }
+    50% {
+        opacity: 0.8;
+        transform: translateX(0) scale(1.05);
+        clip-path: inset(0 0 0 50%);
+    }
+    100% {
+        opacity: 1;
+        transform: translateX(0) scale(1);
+        clip-path: inset(0 0 0 0%);
+    }
 }
 
-.gravity-fall-right {
-    animation: gravityFallRight 1.2s ease-out forwards;
+@keyframes typewriterRight {
+    0% {
+        opacity: 0;
+        transform: translateX(0) scale(0.8);
+        clip-path: inset(0 100% 0 0);
+    }
+    50% {
+        opacity: 0.8;
+        transform: translateX(0) scale(1.05);
+        clip-path: inset(0 50% 0 0);
+    }
+    100% {
+        opacity: 1;
+        transform: translateX(0) scale(1);
+        clip-path: inset(0 0% 0 0);
+    }
 }
 
-.gravity-fall-bottom {
-    animation: gravityFallBottom 1.2s ease-out forwards;
+@keyframes typewriterBottom {
+    0% {
+        opacity: 0;
+        transform: translateY(0) scale(0.8);
+        clip-path: inset(100% 0 0 0);
+    }
+    50% {
+        opacity: 0.8;
+        transform: translateY(0) scale(1.05);
+        clip-path: inset(50% 0 0 0);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+        clip-path: inset(0% 0 0 0);
+    }
 }
 
-.gravity-fall-delay-1 {
-    animation-delay: 0.1s;
+/* Page 3: Services - Magnetic Pull Effect */
+@keyframes magneticPull {
+    0% {
+        opacity: 0;
+        transform: translateY(0) scale(0.5) rotate(0deg);
+        filter: blur(10px);
+    }
+    50% {
+        opacity: 0.7;
+        transform: translateY(-30px) scale(1.2) rotate(180deg);
+        filter: blur(5px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0) scale(1) rotate(360deg);
+        filter: blur(0px);
+    }
 }
 
-.gravity-fall-delay-2 {
-    animation-delay: 0.3s;
+@keyframes magneticPullLeft {
+    0% {
+        opacity: 0;
+        transform: translateX(0) scale(0.5) rotate(0deg);
+        filter: blur(10px);
+    }
+    50% {
+        opacity: 0.7;
+        transform: translateX(-30px) scale(1.2) rotate(-180deg);
+        filter: blur(5px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateX(0) scale(1) rotate(-360deg);
+        filter: blur(0px);
+    }
 }
 
-.gravity-fall-delay-3 {
-    animation-delay: 0.5s;
+@keyframes magneticPullRight {
+    0% {
+        opacity: 0;
+        transform: translateX(0) scale(0.5) rotate(0deg);
+        filter: blur(10px);
+    }
+    50% {
+        opacity: 0.7;
+        transform: translateX(30px) scale(1.2) rotate(180deg);
+        filter: blur(5px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateX(0) scale(1) rotate(360deg);
+        filter: blur(0px);
+    }
 }
 
-.gravity-fall-delay-4 {
-    animation-delay: 0.7s;
+@keyframes magneticPullBottom {
+    0% {
+        opacity: 0;
+        transform: translateY(0) scale(0.5) rotate(0deg);
+        filter: blur(10px);
+    }
+    50% {
+        opacity: 0.7;
+        transform: translateY(30px) scale(1.2) rotate(-180deg);
+        filter: blur(5px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0) scale(1) rotate(-360deg);
+        filter: blur(0px);
+    }
 }
 
-.gravity-fall-delay-5 {
-    animation-delay: 0.9s;
+/* Page 4: About - Wave Effect */
+@keyframes waveEffect {
+    0% {
+        opacity: 0;
+        transform: translateY(0) scale(0.8) rotateX(0deg);
+    }
+    25% {
+        opacity: 0.5;
+        transform: translateY(-20px) scale(1.1) rotateX(90deg);
+    }
+    50% {
+        opacity: 0.8;
+        transform: translateY(10px) scale(0.9) rotateX(180deg);
+    }
+    75% {
+        opacity: 0.6;
+        transform: translateY(-10px) scale(1.05) rotateX(270deg);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0) scale(1) rotateX(360deg);
+    }
+}
+
+@keyframes waveEffectLeft {
+    0% {
+        opacity: 0;
+        transform: translateX(0) scale(0.8) rotateY(0deg);
+    }
+    25% {
+        opacity: 0.5;
+        transform: translateX(-20px) scale(1.1) rotateY(90deg);
+    }
+    50% {
+        opacity: 0.8;
+        transform: translateX(10px) scale(0.9) rotateY(180deg);
+    }
+    75% {
+        opacity: 0.6;
+        transform: translateX(-10px) scale(1.05) rotateY(270deg);
+    }
+    100% {
+        opacity: 1;
+        transform: translateX(0) scale(1) rotateY(360deg);
+    }
+}
+
+@keyframes waveEffectRight {
+    0% {
+        opacity: 0;
+        transform: translateX(0) scale(0.8) rotateY(0deg);
+    }
+    25% {
+        opacity: 0.5;
+        transform: translateX(20px) scale(1.1) rotateY(-90deg);
+    }
+    50% {
+        opacity: 0.8;
+        transform: translateX(-10px) scale(0.9) rotateY(-180deg);
+    }
+    75% {
+        opacity: 0.6;
+        transform: translateX(10px) scale(1.05) rotateY(-270deg);
+    }
+    100% {
+        opacity: 1;
+        transform: translateX(0) scale(1) rotateY(0deg);
+    }
+}
+
+@keyframes waveEffectBottom {
+    0% {
+        opacity: 0;
+        transform: translateY(0) scale(0.8) rotateX(0deg);
+    }
+    25% {
+        opacity: 0.5;
+        transform: translateY(20px) scale(1.1) rotateX(-90deg);
+    }
+    50% {
+        opacity: 0.8;
+        transform: translateY(-10px) scale(0.9) rotateX(-180deg);
+    }
+    75% {
+        opacity: 0.6;
+        transform: translateY(10px) scale(1.05) rotateX(-270deg);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0) scale(1) rotateX(0deg);
+    }
+}
+
+/* Page 5: Contact - Glitch Effect */
+@keyframes glitchEffect {
+    0% {
+        opacity: 0;
+        transform: translateY(0) scale(1) skew(0deg);
+        filter: hue-rotate(0deg);
+    }
+    10% {
+        opacity: 0.8;
+        transform: translateY(-5px) scale(1.05) skew(2deg);
+        filter: hue-rotate(90deg);
+    }
+    20% {
+        opacity: 0.6;
+        transform: translateY(5px) scale(0.95) skew(-2deg);
+        filter: hue-rotate(180deg);
+    }
+    30% {
+        opacity: 0.9;
+        transform: translateY(-3px) scale(1.02) skew(1deg);
+        filter: hue-rotate(270deg);
+    }
+    40% {
+        opacity: 0.7;
+        transform: translateY(3px) scale(0.98) skew(-1deg);
+        filter: hue-rotate(360deg);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0) scale(1) skew(0deg);
+        filter: hue-rotate(0deg);
+    }
+}
+
+@keyframes glitchEffectLeft {
+    0% {
+        opacity: 0;
+        transform: translateX(0) scale(1) skew(0deg);
+        filter: hue-rotate(0deg);
+    }
+    10% {
+        opacity: 0.8;
+        transform: translateX(-5px) scale(1.05) skew(2deg);
+        filter: hue-rotate(90deg);
+    }
+    20% {
+        opacity: 0.6;
+        transform: translateX(5px) scale(0.95) skew(-2deg);
+        filter: hue-rotate(180deg);
+    }
+    30% {
+        opacity: 0.9;
+        transform: translateX(-3px) scale(1.02) skew(1deg);
+        filter: hue-rotate(270deg);
+    }
+    40% {
+        opacity: 0.7;
+        transform: translateX(3px) scale(0.98) skew(-1deg);
+        filter: hue-rotate(360deg);
+    }
+    100% {
+        opacity: 1;
+        transform: translateX(0) scale(1) skew(0deg);
+        filter: hue-rotate(0deg);
+    }
+}
+
+@keyframes glitchEffectRight {
+    0% {
+        opacity: 0;
+        transform: translateX(0) scale(1) skew(0deg);
+        filter: hue-rotate(0deg);
+    }
+    10% {
+        opacity: 0.8;
+        transform: translateX(5px) scale(1.05) skew(-2deg);
+        filter: hue-rotate(90deg);
+    }
+    20% {
+        opacity: 0.6;
+        transform: translateX(-5px) scale(0.95) skew(2deg);
+        filter: hue-rotate(180deg);
+    }
+    30% {
+        opacity: 0.9;
+        transform: translateX(3px) scale(1.02) skew(-1deg);
+        filter: hue-rotate(270deg);
+    }
+    40% {
+        opacity: 0.7;
+        transform: translateX(-3px) scale(0.98) skew(1deg);
+        filter: hue-rotate(360deg);
+    }
+    100% {
+        opacity: 1;
+        transform: translateX(0) scale(1) skew(0deg);
+        filter: hue-rotate(0deg);
+    }
+}
+
+@keyframes glitchEffectBottom {
+    0% {
+        opacity: 0;
+        transform: translateY(0) scale(1) skew(0deg);
+        filter: hue-rotate(0deg);
+    }
+    10% {
+        opacity: 0.8;
+        transform: translateY(5px) scale(1.05) skew(-2deg);
+        filter: hue-rotate(90deg);
+    }
+    20% {
+        opacity: 0.6;
+        transform: translateY(-5px) scale(0.95) skew(2deg);
+        filter: hue-rotate(180deg);
+    }
+    30% {
+        opacity: 0.9;
+        transform: translateY(3px) scale(1.02) skew(-1deg);
+        filter: hue-rotate(270deg);
+    }
+    40% {
+        opacity: 0.7;
+        transform: translateY(-3px) scale(0.98) skew(1deg);
+        filter: hue-rotate(360deg);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0) scale(1) skew(0deg);
+        filter: hue-rotate(0deg);
+    }
+}
+
+/* Animation Classes */
+/* Index Page - Floating Bubbles */
+.float-bubble { animation: floatBubble 0.3s ease-out forwards; }
+.float-bubble-left { animation: floatBubbleLeft 0.3s ease-out forwards; }
+.float-bubble-right { animation: floatBubbleRight 0.3s ease-out forwards; }
+.float-bubble-bottom { animation: floatBubbleBottom 0.3s ease-out forwards; }
+
+/* Appointments Page - Typewriter */
+.typewriter { animation: typewriter 0.35s ease-out forwards; }
+.typewriter-left { animation: typewriterLeft 0.35s ease-out forwards; }
+.typewriter-right { animation: typewriterRight 0.35s ease-out forwards; }
+.typewriter-bottom { animation: typewriterBottom 0.35s ease-out forwards; }
+
+/* Services Page - Magnetic Pull */
+.magnetic-pull { animation: magneticPull 0.4s ease-out forwards; }
+.magnetic-pull-left { animation: magneticPullLeft 0.4s ease-out forwards; }
+.magnetic-pull-right { animation: magneticPullRight 0.4s ease-out forwards; }
+.magnetic-pull-bottom { animation: magneticPullBottom 0.4s ease-out forwards; }
+
+/* About Page - Wave Effect */
+.wave-effect { animation: waveEffect 0.45s ease-out forwards; }
+.wave-effect-left { animation: waveEffectLeft 0.45s ease-out forwards; }
+.wave-effect-right { animation: waveEffectRight 0.45s ease-out forwards; }
+.wave-effect-bottom { animation: waveEffectBottom 0.45s ease-out forwards; }
+
+/* Contact Page - Glitch Effect */
+.glitch-effect { animation: glitchEffect 0.3s ease-out forwards; }
+.glitch-effect-left { animation: glitchEffectLeft 0.3s ease-out forwards; }
+.glitch-effect-right { animation: glitchEffectRight 0.3s ease-out forwards; }
+.glitch-effect-bottom { animation: glitchEffectBottom 0.3s ease-out forwards; }
+
+/* Delay Classes */
+.anim-delay-1 { animation-delay: 0.02s; }
+.anim-delay-2 { animation-delay: 0.04s; }
+.anim-delay-3 { animation-delay: 0.06s; }
+.anim-delay-4 { animation-delay: 0.08s; }
+.anim-delay-5 { animation-delay: 0.1s; }
+
+/* Ensure elements start invisible and animate properly */
+.float-bubble, .float-bubble-left, .float-bubble-right, .float-bubble-bottom,
+.typewriter, .typewriter-left, .typewriter-right, .typewriter-bottom,
+.magnetic-pull, .magnetic-pull-left, .magnetic-pull-right, .magnetic-pull-bottom,
+.wave-effect, .wave-effect-left, .wave-effect-right, .wave-effect-bottom,
+.glitch-effect, .glitch-effect-left, .glitch-effect-right, .glitch-effect-bottom {
+    opacity: 0;
+    visibility: hidden;
+}
+
+/* Show elements when animation starts */
+.float-bubble.anim-delay-1, .float-bubble-left.anim-delay-1, .float-bubble-right.anim-delay-1, .float-bubble-bottom.anim-delay-1,
+.typewriter.anim-delay-1, .typewriter-left.anim-delay-1, .typewriter-right.anim-delay-1, .typewriter-bottom.anim-delay-1,
+.magnetic-pull.anim-delay-1, .magnetic-pull-left.anim-delay-1, .magnetic-pull-right.anim-delay-1, .magnetic-pull-bottom.anim-delay-1,
+.wave-effect.anim-delay-1, .wave-effect-left.anim-delay-1, .wave-effect-right.anim-delay-1, .wave-effect-bottom.anim-delay-1,
+.glitch-effect.anim-delay-1, .glitch-effect-left.anim-delay-1, .glitch-effect-right.anim-delay-1, .glitch-effect-bottom.anim-delay-1 {
+    visibility: visible;
+}
+
+/* Ensure testimonials are visible after animation */
+.testimonial-card.float-bubble,
+.testimonial-card.float-bubble-left,
+.testimonial-card.float-bubble-right,
+.testimonial-card.float-bubble-bottom,
+.testimonial-card.typewriter,
+.testimonial-card.typewriter-left,
+.testimonial-card.typewriter-right,
+.testimonial-card.typewriter-bottom {
+    visibility: visible !important;
+    opacity: 1 !important;
+}
+
+/* Fallback: Ensure testimonials are always visible */
+.testimonial-card {
+    opacity: 1 !important;
+    visibility: visible !important;
+}
+
+.testimonial-slider {
+    opacity: 1 !important;
+    visibility: visible !important;
+}
+
+/* Ensure service cards are always visible */
+.service-card {
+    opacity: 1 !important;
+    visibility: visible !important;
+}
+
+.services-grid {
+    opacity: 1 !important;
+    visibility: visible !important;
+}
+
+/* Ensure testimonial cards are always visible and properly styled */
+.testimonial-card {
+    opacity: 1 !important;
+    visibility: visible !important;
+    background: white !important;
+    border: 1px solid rgba(0, 0, 0, 0.1) !important;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1) !important;
+}
+
+.testimonial-slider {
+    opacity: 1 !important;
+    visibility: visible !important;
 }
 
 * {
@@ -154,7 +598,7 @@ body {
 /* Header Styles */
 header {
     background: var(--primary-dark);
-    padding: 1rem 0;
+    padding: 0.3rem 0;
     position: sticky;
     top: 0;
     z-index: 1000;
@@ -165,6 +609,9 @@ header .container {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1rem;
 }
 
 .logo {
@@ -176,15 +623,19 @@ header .container {
 }
 
 .logo-icon {
-    height: 40px;
-    margin-right: 10px;
+    height: 120px;
     filter: brightness(0) invert(1); /* Make logo white */
+    transition: transform 0.3s ease;
+}
+
+.logo:hover .logo-icon {
+    transform: scale(1.05);
 }
 
 nav ul {
     display: flex;
     list-style: none;
-    gap: 2rem;
+    gap: 1.5rem;
 }
 
 nav ul li a {
@@ -336,6 +787,25 @@ nav ul li a:hover {
     margin-bottom: 2rem;
 }
 
+.testimonial-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: 2rem;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+/* Center the last two cards when there are 5 total */
+.testimonial-grid:has(.testimonial-card:nth-child(5)) {
+    justify-items: center;
+}
+
+.testimonial-grid:has(.testimonial-card:nth-child(5)) .testimonial-card:nth-child(4),
+.testimonial-grid:has(.testimonial-card:nth-child(5)) .testimonial-card:nth-child(5) {
+    grid-column: span 1;
+    justify-self: center;
+}
+
 .testimonial-card {
     flex: 0 0 350px; /* Make cards fixed width, prevent shrinking */
     max-width: 100%; /* Ensure responsiveness */
@@ -384,7 +854,8 @@ nav ul li a:hover {
     object-fit: cover;
 }
 
-.testimonial-content p {
+.testimonial-content p,
+.testimonial-content blockquote {
     font-style: italic;
     margin-bottom: 1.5rem;
     color: var(--text-dark);
@@ -392,6 +863,12 @@ nav ul li a:hover {
     text-align: left;
     font-size: 1.1rem;
     font-weight: 500;
+}
+
+.testimonial-content blockquote {
+    border-left: 3px solid var(--accent-blue);
+    padding-left: 1rem;
+    margin-left: 0;
 }
 
 .testimonial-author h4 {
@@ -404,6 +881,16 @@ nav ul li a:hover {
 
 .testimonial-author span {
     color: var(--text-dark);
+    font-size: 0.9rem;
+    opacity: 0.8;
+}
+
+.testimonial-rating {
+    color: #ffd700;
+    font-size: 1.2rem;
+    text-align: center;
+    margin-top: 1rem;
+}
     font-size: 1rem;
     text-align: left;
     display: block;
@@ -1446,28 +1933,291 @@ footer .container {
     font-weight: 500;
 }
 
+/* Services Section Styles */
+.services-section {
+    padding: 6rem 0;
+    background: linear-gradient(135deg, var(--bg-light) 0%, #f8fafc 100%);
+    position: relative;
+}
+
+.services-section h2 {
+    font-size: 3rem;
+    font-weight: 700;
+    color: var(--text-dark);
+    text-align: center;
+    margin-bottom: 1rem;
+    position: relative;
+}
+
+.services-section h2::after {
+    content: '';
+    position: absolute;
+    bottom: -15px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80px;
+    height: 4px;
+    background: linear-gradient(90deg, var(--btn-primary), var(--accent-blue));
+    border-radius: 2px;
+}
+
+.services-section .section-desc {
+    font-size: 1.3rem;
+    color: var(--text-grey);
+    text-align: center;
+    margin-bottom: 4rem;
+    max-width: 700px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.services-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 2.5rem;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+.service-card {
+    background: white;
+    border-radius: 20px;
+    padding: 2.5rem;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    transition: all 0.4s ease;
+    border: 1px solid rgba(0, 0, 0, 0.05);
+    position: relative;
+    overflow: hidden;
+}
+
+.service-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, var(--btn-primary), var(--accent-blue));
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.service-card:hover::before {
+    opacity: 1;
+}
+
+.service-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+}
+
+.service-icon {
+    font-size: 3.5rem;
+    margin-bottom: 1.5rem;
+    display: block;
+    text-align: center;
+}
+
+.service-card h3 {
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: var(--text-dark);
+    margin-bottom: 1.5rem;
+    text-align: center;
+}
+
+.service-card p {
+    color: var(--text-grey);
+    line-height: 1.7;
+    font-size: 1.1rem;
+    margin-bottom: 1.5rem;
+    text-align: center;
+}
+
+.service-review {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid rgba(0, 0, 0, 0.08);
+    margin-top: 1.5rem;
+}
+
 /* Enhanced Choose Us Card Styles */
 .choose-us-icon {
-    font-size: 2.5rem;
-    margin-bottom: 1rem;
+    font-size: 3rem;
+    margin-bottom: 1.5rem;
     display: block;
+    transition: transform 0.3s ease;
+}
+
+.choose-us-card:hover .choose-us-icon {
+    transform: scale(1.1);
 }
 
 .choose-us-stats {
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-    margin-top: 1rem;
-    padding: 0.8rem;
-    background: rgba(51, 102, 255, 0.1);
-    border-radius: 8px;
-    border-left: 3px solid var(--btn-primary);
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    margin-top: 1.5rem;
+    padding: 1.2rem;
+    background: linear-gradient(135deg, rgba(51, 102, 255, 0.1) 0%, rgba(102, 204, 255, 0.1) 100%);
+    border-radius: 12px;
+    border-left: 4px solid var(--btn-primary);
+    box-shadow: 0 4px 15px rgba(51, 102, 255, 0.1);
 }
 
-.choose-us-stats span {
-    font-size: 0.9rem;
+.choose-us-stats .stat-item {
+    text-align: center;
+    padding: 0.5rem;
+}
+
+.choose-us-stats .stat-number {
+    display: block;
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: var(--btn-primary);
+    margin-bottom: 0.3rem;
+}
+
+.choose-us-stats .stat-label {
+    font-size: 0.8rem;
     color: var(--text-dark);
     font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.card-highlight {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, var(--btn-primary), var(--accent-blue));
+    border-radius: 4px 4px 0 0;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.choose-us-card:hover .card-highlight {
+    opacity: 1;
+}
+
+/* Enhanced Choose Us Section */
+.why-choose-us {
+    padding: 6rem 0;
+    background: linear-gradient(135deg, var(--bg-dark) 0%, var(--primary-dark) 100%);
+    position: relative;
+}
+
+.why-choose-us::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grid" width="10" height="10" patternUnits="userSpaceOnUse"><path d="M 10 0 L 0 0 0 10" fill="none" stroke="rgba(255,255,255,0.03)" stroke-width="0.5"/></pattern></defs><rect width="100" height="100" fill="url(%23grid)"/></svg>');
+    opacity: 0.5;
+}
+
+.why-choose-us .container {
+    position: relative;
+    z-index: 2;
+}
+
+.why-choose-us h2 {
+    font-size: 3rem;
+    font-weight: 700;
+    color: var(--text-white);
+    text-align: center;
+    margin-bottom: 1rem;
+    position: relative;
+}
+
+.why-choose-us h2::after {
+    content: '';
+    position: absolute;
+    bottom: -15px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80px;
+    height: 4px;
+    background: linear-gradient(90deg, var(--accent-blue), var(--btn-primary));
+    border-radius: 2px;
+}
+
+.why-choose-us .section-desc {
+    font-size: 1.3rem;
+    color: var(--text-light);
+    text-align: center;
+    margin-bottom: 4rem;
+    max-width: 700px;
+    margin-left: auto;
+    margin-right: auto;
+    opacity: 0.9;
+}
+
+.choose-us-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2.5rem;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+.choose-us-card {
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.05) 100%);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 20px;
+    padding: 2.5rem;
+    text-align: center;
+    transition: all 0.4s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.choose-us-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, rgba(102, 204, 255, 0.1) 0%, rgba(51, 102, 255, 0.1) 100%);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.choose-us-card:hover::before {
+    opacity: 1;
+}
+
+.choose-us-card:hover {
+    transform: translateY(-10px) scale(1.02);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+    border-color: rgba(102, 204, 255, 0.3);
+}
+
+.choose-us-card h3 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--text-white);
+    margin-bottom: 1.5rem;
+    position: relative;
+    z-index: 2;
+}
+
+.choose-us-card p {
+    color: var(--text-light);
+    line-height: 1.7;
+    font-size: 1.1rem;
+    margin-bottom: 2rem;
+    position: relative;
+    z-index: 2;
+    opacity: 0.9;
 }
 
 /* Hero Buttons Enhancement */
@@ -1595,6 +2345,321 @@ footer .container {
     .judge-panel button {
         padding: 6px 10px;
         font-size: 0.8rem;
+    }
+}
+
+/* Booking Steps Styles */
+.booking-steps {
+    background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+    border-radius: 15px;
+    padding: 2rem;
+    margin-bottom: 2.5rem;
+    border: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.booking-steps h3 {
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: var(--text-dark);
+    margin-bottom: 1.5rem;
+    text-align: center;
+}
+
+.step-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+    padding: 1rem;
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.step-item:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+}
+
+.step-number {
+    width: 40px;
+    height: 40px;
+    background: linear-gradient(135deg, var(--btn-primary), var(--accent-blue));
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 1.2rem;
+    flex-shrink: 0;
+}
+
+.step-content h4 {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--text-dark);
+    margin-bottom: 0.5rem;
+}
+
+.step-content p {
+    color: var(--text-grey);
+    font-size: 0.95rem;
+    line-height: 1.5;
+    margin: 0;
+}
+
+/* Responsive Design for Booking Steps */
+@media (max-width: 768px) {
+    .booking-steps {
+        padding: 1.5rem;
+    }
+    
+    .step-item {
+        flex-direction: column;
+        text-align: center;
+    }
+    
+    .step-number {
+        margin: 0 auto;
+    }
+}
+
+/* Mobile Responsive Design */
+@media (max-width: 768px) {
+    /* Mobile Header */
+    header .container {
+        padding: 0 0.5rem;
+    }
+    
+    .logo-icon {
+        height: 60px;
+    }
+    
+    nav ul {
+        gap: 1rem;
+    }
+    
+    nav ul li a {
+        font-size: 0.9rem;
+    }
+    
+    .account-btn {
+        padding: 8px 16px;
+        font-size: 0.9rem;
+    }
+    
+    /* Mobile Hero */
+    .hero {
+        padding: 3rem 1rem;
+    }
+    
+    .hero h1 {
+        font-size: 2rem;
+    }
+    
+    .hero h2 {
+        font-size: 1.2rem;
+    }
+    
+    .hero p {
+        font-size: 1rem;
+    }
+    
+    .hero-buttons {
+        flex-direction: column;
+        gap: 1rem;
+    }
+    
+    .cta-btn {
+        padding: 0.8rem 1.5rem;
+        font-size: 0.9rem;
+    }
+    
+    /* Mobile Testimonials */
+    .testimonials {
+        padding: 3rem 1rem;
+    }
+    
+    .testimonials h2 {
+        font-size: 2rem;
+    }
+    
+    .testimonial-grid {
+        display: flex;
+        flex-direction: column;
+        gap: 1.5rem;
+    }
+    
+    .testimonial-card {
+        padding: 1.5rem;
+    }
+    
+    .testimonial-avatar {
+        width: 60px;
+        height: 60px;
+    }
+    
+    /* Mobile Services */
+    .services-section {
+        padding: 3rem 1rem;
+    }
+    
+    .services-section h2 {
+        font-size: 2rem;
+    }
+    
+    .services-grid {
+        display: flex;
+        flex-direction: column;
+        gap: 1.5rem;
+    }
+    
+    .service-card {
+        padding: 1.5rem;
+    }
+    
+    .service-icon {
+        font-size: 2.5rem;
+    }
+    
+    /* Mobile Contact Info */
+    .contact-info-section {
+        padding: 3rem 1rem;
+    }
+    
+    .contact-info-section h2 {
+        font-size: 2rem;
+    }
+    
+    .contact-info-grid {
+        display: flex;
+        flex-direction: column;
+        gap: 1.5rem;
+    }
+    
+    .contact-info-card {
+        padding: 1.5rem;
+    }
+    
+    /* Mobile Footer */
+    footer {
+        padding: 2rem 1rem;
+    }
+    
+    .footer-content {
+        flex-direction: column;
+        gap: 2rem;
+    }
+    
+    .footer-newsletter .logo-icon {
+        height: 60px;
+    }
+    
+    .newsletter-form {
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+    
+    .newsletter-form input {
+        max-width: 100%;
+    }
+    
+    .footer-links {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+    
+    /* Mobile About Section */
+    .about-section {
+        padding: 3rem 1rem;
+    }
+    
+    .about-section h2 {
+        font-size: 2rem;
+    }
+    
+    .about-content {
+        flex-direction: column;
+        gap: 2rem;
+    }
+    
+    /* Mobile Choose Us Section */
+    .choose-us-section {
+        padding: 3rem 1rem;
+    }
+    
+    .choose-us-section h2 {
+        font-size: 2rem;
+    }
+    
+    .choose-us-grid {
+        display: flex;
+        flex-direction: column;
+        gap: 1.5rem;
+    }
+    
+    .choose-us-card {
+        padding: 1.5rem;
+    }
+    
+    /* Mobile Judge Panel */
+    .judge-panel {
+        position: fixed;
+        bottom: 0.5rem;
+        left: 0.5rem;
+        max-width: 200px;
+        padding: 0.75rem;
+    }
+    
+    .judge-panel h3 {
+        font-size: 0.9rem;
+    }
+    
+    .judge-panel button {
+        padding: 0.4rem 0.8rem;
+        font-size: 0.8rem;
+    }
+    
+    /* Mobile Chat Widget */
+    .chat-widget {
+        bottom: 0.5rem;
+        right: 0.5rem;
+    }
+    
+    .chat-bubble {
+        max-width: 200px;
+        padding: 0.75rem;
+    }
+    
+    .chat-icon {
+        width: 45px;
+        height: 45px;
+        font-size: 1.2rem;
+    }
+}
+
+/* Tablet Responsive */
+@media (min-width: 769px) and (max-width: 1024px) {
+    .hero h1 {
+        font-size: 2.5rem;
+    }
+    
+    .testimonial-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .services-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .contact-info-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .choose-us-grid {
+        grid-template-columns: repeat(2, 1fr);
     }
 }
 

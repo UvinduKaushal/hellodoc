@@ -2,8 +2,8 @@
 
 document.addEventListener('DOMContentLoaded', function() {
     // Initialize all components
-    initGravityFallAnimations();
-    initTestimonialSlider();
+    initPageAnimations();
+    initTestimonialGrid();
     initCategoryFilters();
     initNewsletterForm();
     initSmoothScrolling();
@@ -61,6 +61,25 @@ document.addEventListener('DOMContentLoaded', function() {
             window.location.href = 'admin.html';
         });
     }
+    
+    // Global fallback to ensure service cards are visible
+    setTimeout(() => {
+        const serviceCards = document.querySelectorAll('.service-card');
+        serviceCards.forEach(card => {
+            card.style.opacity = '1';
+            card.style.visibility = 'visible';
+        });
+    }, 1500); // 1.5 second fallback
+    
+    // Global fallback to ensure testimonial cards are visible
+    setTimeout(() => {
+        const testimonialCards = document.querySelectorAll('.testimonial-card');
+        testimonialCards.forEach(card => {
+            card.style.opacity = '1';
+            card.style.visibility = 'visible';
+            card.style.background = 'white';
+        });
+    }, 1000); // 1 second fallback
 });
 
 // Testimonial Slider Functionality
@@ -98,6 +117,14 @@ function initTestimonialSlider() {
     
     // Initial slider position
     updateSlider();
+    
+    // Ensure testimonials are visible after a delay
+    setTimeout(() => {
+        testimonialCards.forEach(card => {
+            card.style.opacity = '1';
+            card.style.visibility = 'visible';
+        });
+    }, 2000); // 2 second fallback
 }
 
 // Category Filter Functionality
@@ -491,38 +518,127 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 });
 
-// Gravity Fall Animation Function
-function initGravityFallAnimations() {
-    const elements = document.querySelectorAll('h1, h2, h3, .hero-content, .service-card, .testimonial-card, .cta-button, .hero-buttons');
+// Multiple Animation Types for Different Pages
+function initPageAnimations() {
+    const currentPage = getCurrentPage();
+    const elements = document.querySelectorAll('h1, h2, h3, .hero-content, .service-card, .testimonial-card, .cta-button, .hero-buttons, .option-card, .contact-info-card, .choose-us-card');
     
     elements.forEach((element, index) => {
-        // Reset opacity to 0 initially
+        // Reset opacity and visibility to 0 initially
         element.style.opacity = '0';
+        element.style.visibility = 'hidden';
         
-        // Add animation class based on position
-        if (index % 4 === 0) {
-            element.classList.add('gravity-fall');
-        } else if (index % 4 === 1) {
-            element.classList.add('gravity-fall-left');
-        } else if (index % 4 === 2) {
-            element.classList.add('gravity-fall-right');
-        } else {
-            element.classList.add('gravity-fall-bottom');
+        // Determine animation type based on page
+        let animationClass = '';
+        let delayClass = '';
+        
+        switch(currentPage) {
+            case 'index':
+                animationClass = getIndexAnimation(index);
+                break;
+            case 'appointments':
+                animationClass = getAppointmentsAnimation(index);
+                break;
+            case 'services':
+                animationClass = getServicesAnimation(index);
+                break;
+            case 'about':
+                animationClass = getAboutAnimation(index);
+                break;
+            case 'contact':
+                animationClass = getContactAnimation(index);
+                break;
+            default:
+                animationClass = getIndexAnimation(index); // Default to index animations
         }
+        
+        // Add animation class
+        element.classList.add(animationClass);
         
         // Add delay for staggered effect
-        if (index % 5 === 0) {
-            element.classList.add('gravity-fall-delay-1');
-        } else if (index % 5 === 1) {
-            element.classList.add('gravity-fall-delay-2');
-        } else if (index % 5 === 2) {
-            element.classList.add('gravity-fall-delay-3');
-        } else if (index % 5 === 3) {
-            element.classList.add('gravity-fall-delay-4');
-        } else {
-            element.classList.add('gravity-fall-delay-5');
-        }
+        delayClass = getDelayClass(index);
+        element.classList.add(delayClass);
+        
+        // Make element visible when animation starts
+        setTimeout(() => {
+            element.style.visibility = 'visible';
+            // Ensure testimonials are always visible
+            if (element.classList.contains('testimonial-card')) {
+                element.style.opacity = '1';
+                element.style.visibility = 'visible';
+            }
+            // Ensure service cards are always visible
+            if (element.classList.contains('service-card')) {
+                element.style.opacity = '1';
+                element.style.visibility = 'visible';
+            }
+        }, getDelayValue(delayClass));
     });
+}
+
+// Helper function to get delay value in milliseconds
+function getDelayValue(delayClass) {
+    const delayMap = {
+        'anim-delay-1': 20,
+        'anim-delay-2': 40,
+        'anim-delay-3': 60,
+        'anim-delay-4': 80,
+        'anim-delay-5': 100
+    };
+    return delayMap[delayClass] || 0;
+}
+
+// Helper function to determine current page
+function getCurrentPage() {
+    const path = window.location.pathname;
+    if (path.includes('index.html') || path.endsWith('/') || path.endsWith('/HealthFlow')) {
+        return 'index';
+    } else if (path.includes('appointments.html')) {
+        return 'appointments';
+    } else if (path.includes('services.html')) {
+        return 'services';
+    } else if (path.includes('about.html')) {
+        return 'about';
+    } else if (path.includes('contact.html')) {
+        return 'contact';
+    }
+    return 'index'; // Default
+}
+
+// Index page - Floating Bubbles
+function getIndexAnimation(index) {
+    const animations = ['float-bubble', 'float-bubble-left', 'float-bubble-right', 'float-bubble-bottom'];
+    return animations[index % animations.length];
+}
+
+// Appointments page - Typewriter
+function getAppointmentsAnimation(index) {
+    const animations = ['typewriter', 'typewriter-left', 'typewriter-right', 'typewriter-bottom'];
+    return animations[index % animations.length];
+}
+
+// Services page - Magnetic Pull
+function getServicesAnimation(index) {
+    const animations = ['magnetic-pull', 'magnetic-pull-left', 'magnetic-pull-right', 'magnetic-pull-bottom'];
+    return animations[index % animations.length];
+}
+
+// About page - Wave Effect
+function getAboutAnimation(index) {
+    const animations = ['wave-effect', 'wave-effect-left', 'wave-effect-right', 'wave-effect-bottom'];
+    return animations[index % animations.length];
+}
+
+// Contact page - Glitch Effect
+function getContactAnimation(index) {
+    const animations = ['glitch-effect', 'glitch-effect-left', 'glitch-effect-right', 'glitch-effect-bottom'];
+    return animations[index % animations.length];
+}
+
+// Get delay class
+function getDelayClass(index) {
+    const delays = ['anim-delay-1', 'anim-delay-2', 'anim-delay-3', 'anim-delay-4', 'anim-delay-5'];
+    return delays[index % delays.length];
 }
 
 // Function to create a test admin account if it doesn't exist
@@ -569,6 +685,21 @@ function createTestUserAccount() {
     }
 }
 
+// Testimonial Grid Functionality
+function initTestimonialGrid() {
+    const testimonialCards = document.querySelectorAll('.testimonial-card');
+    
+    if (!testimonialCards.length) return;
+    
+    // Ensure testimonials are visible after a delay
+    setTimeout(() => {
+        testimonialCards.forEach(card => {
+            card.style.opacity = '1';
+            card.style.visibility = 'visible';
+        });
+    }, 1000); // 1 second fallback
+}
+
 // Chatbot functionality (if exists)
 function initChatbot() {
     const chatbotBubble = document.querySelector('.chatbot-bubble');
@@ -594,6 +725,8 @@ function initChatbot() {
         });
     }
 }
+
+
 
 // Initialize chatbot
 document.addEventListener('DOMContentLoaded', initChatbot);
