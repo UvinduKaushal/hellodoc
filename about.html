@@ -1,0 +1,597 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HelloDoc - About Us</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* Modern About Page Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        body {
+            background: url('aboutUs page Hellodoc/1.png') no-repeat center center/cover;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            color: #222;
+            position: relative;
+        }
+
+        /* Background Overlay */
+        body::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(0, 47, 108, 0.1) 0%, rgba(13, 77, 188, 0.1) 100%);
+            z-index: 1;
+        }
+
+        /* ===== Dynamic Island Navigation ===== */
+        nav {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(255, 255, 255, 0.25);
+            backdrop-filter: blur(12px);
+            border-radius: 50px;
+            padding: 12px 35px;
+            display: flex;
+            gap: 25px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+            z-index: 1000;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        nav a {
+            color: #fff;
+            font-weight: 600;
+            text-decoration: none;
+            font-size: 14px;
+            letter-spacing: 0.5px;
+            transition: all 0.3s ease;
+            padding: 8px 16px;
+            border-radius: 20px;
+        }
+
+        nav a:hover {
+            color: #a8d0ff;
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
+        }
+
+        /* ===== Main Layout ===== */
+        .container {
+            display: flex;
+            flex: 1;
+            width: 100%;
+            margin-top: 100px;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* ===== Left Content Panel ===== */
+        .left {
+            flex: 7;
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(12px);
+            padding: 60px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            border-top-right-radius: 25px;
+            border-bottom-right-radius: 25px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .left h1 {
+            font-size: 3.5rem;
+            color: #002f6c;
+            margin-bottom: 25px;
+            font-weight: 700;
+            background: linear-gradient(135deg, #002f6c, #0d4dbc);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .left p {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            margin-bottom: 20px;
+            color: #333;
+            font-weight: 500;
+        }
+
+        .left strong {
+            color: #0d4dbc;
+            font-weight: 600;
+        }
+
+        /* ===== CTA Buttons ===== */
+        .cta-buttons {
+            margin-top: 35px;
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #0d4dbc, #002f6c);
+            color: white;
+            border: none;
+            padding: 15px 32px;
+            font-size: 16px;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            font-weight: 600;
+            box-shadow: 0 5px 15px rgba(13, 77, 188, 0.3);
+        }
+
+        .btn-primary:hover {
+            background: linear-gradient(135deg, #093b8f, #002f6c);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(13, 77, 188, 0.4);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            border: 2px solid #0d4dbc;
+            color: #0d4dbc;
+            padding: 15px 32px;
+            font-size: 16px;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .btn-secondary:hover {
+            background: #0d4dbc;
+            color: white;
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(13, 77, 188, 0.3);
+        }
+
+        /* ===== Right Mission Panel ===== */
+        .right {
+            flex: 3;
+            background: rgba(13, 77, 188, 0.95);
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            padding: 40px;
+            text-align: center;
+            border-top-left-radius: 25px;
+            border-bottom-left-radius: 25px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .right h2 {
+            font-size: 2rem;
+            margin-bottom: 20px;
+            z-index: 2;
+            font-weight: 700;
+        }
+
+        .right p {
+            font-size: 1rem;
+            line-height: 1.7;
+            max-width: 350px;
+            z-index: 2;
+            font-weight: 500;
+        }
+
+        .bg-text {
+            position: absolute;
+            font-size: 4rem;
+            font-weight: 900;
+            color: rgba(255, 255, 255, 0.15);
+            z-index: 1;
+            top: 25%;
+            left: 50%;
+            transform: translateX(-50%);
+            text-align: center;
+            white-space: nowrap;
+            letter-spacing: 2px;
+        }
+
+        /* ===== Additional Content Sections ===== */
+        .content-sections {
+            position: relative;
+            z-index: 2;
+            margin-top: 60px;
+            padding: 0 60px;
+        }
+
+        .section-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-bottom: 60px;
+        }
+
+        .content-card {
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(12px);
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .content-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+        }
+
+        .content-card h3 {
+            font-size: 1.5rem;
+            color: #002f6c;
+            margin-bottom: 15px;
+            font-weight: 700;
+        }
+
+        .content-card p {
+            color: #555;
+            line-height: 1.6;
+            font-weight: 500;
+        }
+
+        .content-card .icon {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            display: block;
+        }
+
+        /* ===== Responsive Design ===== */
+        @media (max-width: 1200px) {
+            .container {
+                flex-direction: column;
+            }
+            
+            .left, .right {
+                flex: none;
+                border-radius: 25px;
+                margin: 20px;
+            }
+            
+            .left {
+                border-radius: 25px;
+            }
+            
+            .right {
+                border-radius: 25px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            nav {
+                padding: 10px 25px;
+                gap: 15px;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            nav a {
+                font-size: 13px;
+                padding: 6px 12px;
+            }
+            
+            .left {
+                padding: 40px 30px;
+            }
+            
+            .left h1 {
+                font-size: 2.5rem;
+            }
+            
+            .cta-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .btn-primary, .btn-secondary {
+                width: 100%;
+                max-width: 250px;
+                text-align: center;
+            }
+            
+            .content-sections {
+                padding: 0 30px;
+            }
+            
+            .section-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .left {
+                padding: 30px 20px;
+            }
+            
+            .left h1 {
+                font-size: 2rem;
+            }
+            
+            .left p {
+                font-size: 1rem;
+            }
+            
+            .right {
+                padding: 30px 20px;
+            }
+            
+            .bg-text {
+                font-size: 2.5rem;
+            }
+            
+            .content-sections {
+                padding: 0 20px;
+            }
+        }
+
+        /* ===== Animations ===== */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .left, .right, .content-card {
+            animation: fadeInUp 0.8s ease-out;
+        }
+
+        .content-card:nth-child(1) { animation-delay: 0.1s; }
+        .content-card:nth-child(2) { animation-delay: 0.2s; }
+        .content-card:nth-child(3) { animation-delay: 0.3s; }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="logo">
+                <img src="images/main/3.png" alt="HelloDoc Logo" class="logo-icon">
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="services.html">Services</a></li>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="donations.html">Donations</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                    <li><a href="ai_assistant.html">AI Assistant</a></li>
+                </ul>
+            </nav>
+            <a href="login.html" class="account-btn">MY ACCOUNT</a>
+        </div>
+    </header>
+
+    <!-- Main About Section -->
+    <div class="container">
+        <!-- LEFT CONTENT PANEL -->
+        <div class="left">
+            <h1>About HelloDoc</h1>
+            <p>
+                At <strong>HelloDoc</strong>, we believe healthcare should be simple, secure, and accessible for everyone. 
+                Our platform connects patients with doctors and verified pharmaceutical businesses through a trusted digital ecosystem.
+            </p>
+            <p>
+                We provide <strong>virtual consultations</strong> with licensed medical professionals, an <strong>AI assistant</strong> 
+                for first aid and symptom analysis, and a safe space for pharmaceutical companies to offer their products directly to patients.
+            </p>
+            <p>
+                Through our <strong>donation forum</strong>, we also empower individuals and organizations to support 
+                those who cannot afford healthcare or medication. Every contribution makes a difference in building 
+                a healthier, more inclusive world.
+            </p>
+            <div class="cta-buttons">
+                <a href="services.html" class="btn-primary">Our Services</a>
+                <a href="donations.html" class="btn-secondary">Join Our Mission</a>
+            </div>
+        </div>
+
+        <!-- RIGHT MISSION PANEL -->
+        <div class="right">
+            <div class="bg-text">HELLODOC</div>
+            <div>
+                <h2>Your Health, Our Mission</h2>
+                <p>
+                    More than just telemedicine – HelloDoc is a movement to make healthcare simpler, smarter, 
+                    and within everyone's reach.
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Additional Content Sections -->
+    <div class="content-sections">
+        <div class="section-grid">
+            <div class="content-card">
+                <span class="icon">🏥</span>
+                <h3>Our Story</h3>
+                <p>
+                    HelloDoc was born from a simple observation: healthcare should be accessible to everyone, 
+                    regardless of age or technical ability. We noticed that many seniors struggled with complex 
+                    medical systems and long wait times for basic health information.
+                </p>
+            </div>
+            
+            <div class="content-card">
+                <span class="icon">🎯</span>
+                <h3>Our Mission</h3>
+                <p>
+                    Making healthcare services available to everyone, especially those who face barriers to 
+                    traditional medical care. We leverage technology to create simple, effective solutions 
+                    for complex healthcare challenges.
+                </p>
+            </div>
+            
+            <div class="content-card">
+                <span class="icon">🤝</span>
+                <h3>Our Values</h3>
+                <p>
+                    Building reliable relationships with users through secure, transparent, and professional 
+                    healthcare services. We provide care with empathy and understanding, recognizing that 
+                    every health journey is unique.
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Fixed Chatbot -->
+    <div class="fixed-chatbot">
+        <div class="chatbot-bubble">Learn more about HelloDoc?</div>
+        <a href="ai_assistant.html" class="chatbot-icon">
+            <img src="images/main/7.png" alt="AI Assistant">
+        </a>
+    </div>
+
+    <script>
+        // Smooth scroll for navigation links
+        document.querySelectorAll('nav a').forEach(link => {
+            link.addEventListener('click', function(e) {
+                if (this.getAttribute('href').startsWith('#')) {
+                    e.preventDefault();
+                    const target = document.querySelector(this.getAttribute('href'));
+                    if (target) {
+                        target.scrollIntoView({ behavior: 'smooth' });
+                    }
+                }
+            });
+        });
+
+        // Add scroll effect to navigation
+        window.addEventListener('scroll', function() {
+            const nav = document.querySelector('nav');
+            if (window.scrollY > 50) {
+                nav.style.background = 'rgba(255, 255, 255, 0.35)';
+                nav.style.backdropFilter = 'blur(20px)';
+            } else {
+                nav.style.background = 'rgba(255, 255, 255, 0.25)';
+                nav.style.backdropFilter = 'blur(12px)';
+            }
+        });
+
+        // Add hover effects to content cards
+        document.querySelectorAll('.content-card').forEach(card => {
+            card.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-8px)';
+            });
+            
+            card.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateY(0)';
+            });
+        });
+    </script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const accountBtn = document.querySelector('.account-btn');
+            const loggedInUser = JSON.parse(sessionStorage.getItem('loggedInUser'));
+            
+            if (loggedInUser) {
+                if (loggedInUser.role === 'admin') {
+                    accountBtn.textContent = 'ADMIN DASHBOARD';
+                    accountBtn.href = 'admin.html';
+                } else {
+                    accountBtn.textContent = `Hi, ${loggedInUser.firstName.toUpperCase()}`;
+                    accountBtn.href = '#'; // Placeholder for user profile page
+                }
+
+                // Add logout option
+                const nav = document.querySelector('header nav ul');
+                const logoutLi = document.createElement('li');
+                const logoutLink = document.createElement('a');
+                logoutLink.href = '#';
+                logoutLink.textContent = 'LOGOUT';
+                logoutLink.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    sessionStorage.removeItem('loggedInUser');
+                    alert('Logged out successfully.');
+                    window.location.href = 'index.html';
+                });
+                logoutLi.appendChild(logoutLink);
+                nav.appendChild(logoutLi);
+            } else {
+                accountBtn.textContent = 'MY ACCOUNT';
+                accountBtn.href = 'login.html';
+            }
+        });
+    </script>
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-newsletter">
+                    <div class="logo">
+                        <img src="images/main/3.png" alt="HelloDoc Logo" class="logo-icon">
+                    </div>
+                    <p>Stay in the loop and sign up for the HelloDoc Newsletter</p>
+                    <div class="newsletter-form">
+                        <input type="email" placeholder="Enter your email">
+                        <button type="submit">→</button>
+                    </div>
+                </div>
+                
+                <div class="footer-links">
+                    <div class="link-column">
+                        <h4>Company</h4>
+                        <ul>
+                            <li><a href="index.html">Home</a></li>
+                            <li><a href="services.html">Services</a></li>
+                            <li><a href="about.html">About</a></li>
+                            <li><a href="contact.html">Contact</a></li>
+                        </ul>
+                    </div>
+                    <div class="link-column">
+                        <h4>Documentation</h4>
+                        <ul>
+                            <li><a href="help_centre.html">Help Centre</a></li>
+                            <li><a href="health_centre.html">Health Centre</a></li>
+                            <li><a href="faq.html">FAQ</a></li>
+                            <li><a href="privacy_policy.html">Privacy Policy</a></li>
+                        </ul>
+                    </div>
+                    <div class="link-column">
+                        <h4>Social</h4>
+                        <ul>
+                            <li><a href="#">Facebook</a></li>
+                            <li><a href="#">Instagram</a></li>
+                            <li><a href="#">Youtube</a></li>
+                            <li><a href="#">Twitter</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>© HelloDoc All Rights Reserved 2025</p>
+                <a href="#">Terms & Conditions</a>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

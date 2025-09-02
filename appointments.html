@@ -1,0 +1,1095 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HelloDoc - Book Appointments</title>
+    <link rel="icon" type="image/png" href="images/main/3.png">
+    <link rel="apple-touch-icon" href="images/main/3.png">
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* Appointments Page Specific Styles */
+        .appointments-hero {
+            background: linear-gradient(135deg, var(--primary-dark) 0%, var(--bg-medium) 100%);
+            padding: 80px 0;
+            color: var(--text-white);
+            text-align: center;
+        }
+        
+        .appointments-hero h1 {
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+        
+        .appointments-hero p {
+            font-size: 1.2rem;
+            max-width: 600px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+        
+        .appointments-content {
+            background: var(--bg-light);
+            padding: 80px 0;
+            color: var(--text-dark);
+        }
+        
+        .appointments-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: start;
+        }
+        
+        .booking-form {
+            background: white;
+            padding: 3rem;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+        
+        .booking-form h2 {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--text-dark);
+            margin-bottom: 2rem;
+        }
+        
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        .form-group label {
+            display: block;
+            font-weight: 600;
+            color: var(--text-dark);
+            margin-bottom: 0.5rem;
+        }
+        
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-size: 1rem;
+            background: white;
+            color: var(--text-dark);
+            transition: border-color 0.3s ease;
+        }
+        
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--btn-primary);
+        }
+        
+        .form-group textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+        
+        .submit-btn {
+            background: var(--btn-primary);
+            color: white;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 25px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            width: 100%;
+        }
+        
+        .submit-btn:hover {
+            background: var(--primary-medium);
+        }
+        
+        .appointment-info {
+            background: white;
+            padding: 3rem;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+        
+        .appointment-info h2 {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--text-dark);
+            margin-bottom: 2rem;
+        }
+        
+        .info-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 2rem;
+            padding: 1.5rem;
+            background: var(--bg-light);
+            border-radius: 15px;
+            transition: transform 0.3s ease;
+        }
+        
+        .info-item:hover {
+            transform: translateY(-3px);
+        }
+        
+        .info-icon {
+            width: 60px;
+            height: 60px;
+            background: var(--btn-primary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            color: white;
+            margin-right: 1.5rem;
+            flex-shrink: 0;
+            overflow: hidden;
+        }
+
+        .info-icon img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .info-content h3 {
+            font-weight: 600;
+            color: var(--text-dark);
+            margin-bottom: 0.5rem;
+        }
+        
+        .info-content p {
+            color: var(--text-dark);
+            line-height: 1.6;
+            font-size: 1.1rem;
+            font-weight: 500;
+        }
+        
+        .doctors-section {
+            background: white;
+            padding: 80px 0;
+            color: var(--text-dark);
+        }
+        
+        .doctors-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+        
+        .doctor-card {
+            background: var(--bg-light);
+            border-radius: 20px;
+            padding: 2rem;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+        
+        .doctor-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .doctor-avatar {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--accent-blue) 0%, var(--primary-light) 100%);
+            margin: 0 auto 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            color: white;
+        }
+        
+        .doctor-card h3 {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--text-dark);
+            margin-bottom: 0.5rem;
+        }
+        
+        .doctor-specialty {
+            color: var(--accent-blue);
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+        
+        .doctor-rating {
+            color: #FFD700;
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+        }
+        
+        .doctor-availability {
+            color: var(--text-dark);
+            font-size: 1rem;
+            margin-bottom: 1.5rem;
+            font-weight: 500;
+        }
+        
+        .book-doctor-btn {
+            background: var(--btn-primary);
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 20px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        
+        .book-doctor-btn:hover {
+            background: var(--primary-medium);
+        }
+        
+        /* Appointment Options Section Styles */
+        .appointment-options {
+            padding: 5rem 0;
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+        }
+        
+        .appointment-options h2 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--text-dark);
+            text-align: center;
+            margin-bottom: 1rem;
+        }
+        
+        .appointment-options .section-desc {
+            font-size: 1.2rem;
+            color: var(--text-grey);
+            text-align: center;
+            margin-bottom: 3rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .options-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .option-card {
+            background: white;
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            text-align: center;
+            border: 1px solid rgba(0,0,0,0.05);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .option-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--btn-primary), var(--accent-blue));
+        }
+        
+        .option-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+        }
+        
+        .option-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            display: block;
+        }
+        
+        .option-card h3 {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: var(--text-dark);
+            margin-bottom: 1rem;
+        }
+        
+        .option-card p {
+            color: var(--text-grey);
+            margin-bottom: 1.5rem;
+            line-height: 1.6;
+            font-size: 1rem;
+        }
+        
+        .option-features {
+            list-style: none;
+            margin-bottom: 1.5rem;
+            text-align: left;
+        }
+        
+        .option-features li {
+            color: var(--text-dark);
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+        
+        .option-price {
+            margin-bottom: 1.5rem;
+        }
+        
+        .option-price .price {
+            display: block;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--btn-primary);
+        }
+        
+        .option-price .duration {
+            font-size: 0.9rem;
+            color: var(--text-grey);
+        }
+        
+        .option-btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 25px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 1rem;
+        }
+        
+        .option-btn.primary {
+            background: var(--btn-primary);
+            color: white;
+        }
+        
+        .option-btn.primary:hover {
+            background: var(--primary-medium);
+            transform: translateY(-2px);
+        }
+        
+        .option-btn.secondary {
+            background: var(--btn-secondary);
+            color: white;
+        }
+        
+        .option-btn.secondary:hover {
+            background: var(--accent-blue);
+            transform: translateY(-2px);
+        }
+        
+        .option-btn.tertiary {
+            background: var(--btn-accent);
+            color: white;
+        }
+        
+        .option-btn.tertiary:hover {
+            background: var(--btn-light);
+            color: var(--text-dark);
+            transform: translateY(-2px);
+        }
+        
+        /* Hero Stats Styles */
+        .hero-stats {
+            display: flex;
+            justify-content: center;
+            gap: 3rem;
+            margin-top: 3rem;
+            flex-wrap: wrap;
+        }
+        
+        .stat-item {
+            text-align: center;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 1.5rem;
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .stat-number {
+            display: block;
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--accent-blue);
+            margin-bottom: 0.5rem;
+        }
+        
+        .stat-label {
+            font-size: 1rem;
+            color: var(--text-white);
+            font-weight: 500;
+        }
+        
+        /* Enhanced Form Styles */
+        .form-desc {
+            color: var(--text-grey);
+            margin-bottom: 2rem;
+            font-size: 1.1rem;
+            line-height: 1.6;
+        }
+        
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .form-group.full-width {
+            grid-column: 1 / -1;
+        }
+        
+        .checkbox-label {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            cursor: pointer;
+            font-size: 0.9rem;
+            color: var(--text-grey);
+        }
+        
+        .checkbox-label input[type="checkbox"] {
+            width: auto;
+            margin: 0;
+        }
+        
+        .terms-link {
+            color: var(--btn-primary);
+            text-decoration: none;
+        }
+        
+        .terms-link:hover {
+            text-decoration: underline;
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .appointments-hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .appointments-grid {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+            
+            .booking-form,
+            .appointment-info {
+                padding: 2rem;
+            }
+            
+            .doctors-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .hero-stats {
+                gap: 1.5rem;
+            }
+            
+            .stat-item {
+                padding: 1rem;
+            }
+            
+            .stat-number {
+                font-size: 2rem;
+            }
+            
+            .options-grid {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+            
+            .form-row {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .appointments-hero h1 {
+                font-size: 2rem;
+            }
+            
+            .appointments-hero p {
+                font-size: 1rem;
+            }
+            
+            .booking-form h2,
+            .appointment-info h2 {
+                font-size: 1.8rem;
+            }
+            
+            .info-item {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .info-icon {
+                margin-right: 0;
+                margin-bottom: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <div class="logo">
+                <img src="images/main/3.png" alt="HelloDoc Logo" class="logo-icon">
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="services.html">Services</a></li>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="donations.html">Donations</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </nav>
+            <a href="login.html" class="account-btn">MY ACCOUNT</a>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="appointments-hero">
+        <div class="container">
+            <h1 class="typewriter">Book Your Appointment</h1>
+            <p class="typewriter-left anim-delay-1">Schedule a video consultation with our board-certified physicians. Get professional medical advice from the comfort of your home with our state-of-the-art telemedicine platform.</p>
+            <div class="hero-stats">
+                <div class="stat-item typewriter-right anim-delay-2">
+                    <span class="stat-number">200+</span>
+                    <span class="stat-label">Licensed Doctors</span>
+                </div>
+                <div class="stat-item typewriter-bottom anim-delay-3">
+                    <span class="stat-number">24hr</span>
+                    <span class="stat-label">Appointment Booking</span>
+                </div>
+                <div class="stat-item typewriter anim-delay-4">
+                    <span class="stat-number">95%</span>
+                    <span class="stat-label">Patient Satisfaction</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Appointment Options Section -->
+    <section class="appointment-options">
+        <div class="container">
+            <h2 class="typewriter">Choose Your Appointment Type</h2>
+            <p class="section-desc typewriter-left anim-delay-1">Multiple ways to connect with healthcare professionals</p>
+            
+            <div class="options-grid">
+                <div class="option-card typewriter-right anim-delay-2">
+                    <div class="option-icon">📹</div>
+                    <h3>Video Consultation</h3>
+                    <p>HD video calls with board-certified physicians. Perfect for routine check-ups, follow-ups, and non-emergency consultations.</p>
+                    <ul class="option-features">
+                        <li>✓ HD Video Quality</li>
+                        <li>✓ Screen Sharing</li>
+                        <li>✓ Digital Prescriptions</li>
+                        <li>✓ 30-45 min sessions</li>
+                    </ul>
+                    <div class="option-price">
+                        <span class="price">Rs. 1,500</span>
+                        <span class="duration">per consultation</span>
+                    </div>
+                    <button class="option-btn primary" onclick="scrollToForm('video')">Book Video Call</button>
+                </div>
+                
+                <div class="option-card typewriter-bottom anim-delay-3">
+                    <div class="option-icon">📞</div>
+                    <h3>Phone Consultation</h3>
+                    <p>Audio-only consultations for patients who prefer voice calls or have limited internet connectivity.</p>
+                    <ul class="option-features">
+                        <li>✓ Clear Audio Quality</li>
+                        <li>✓ No Internet Required</li>
+                        <li>✓ Prescription Delivery</li>
+                        <li>✓ 20-30 min sessions</li>
+                    </ul>
+                    <div class="option-price">
+                        <span class="price">Rs. 1,200</span>
+                        <span class="duration">per consultation</span>
+                    </div>
+                    <button class="option-btn secondary" onclick="scrollToForm('phone')">Book Phone Call</button>
+                </div>
+                
+                <div class="option-card typewriter anim-delay-4">
+                    <div class="option-icon">💬</div>
+                    <h3>Chat Consultation</h3>
+                    <p>Text-based consultations with doctors for quick questions and follow-up care.</p>
+                    <ul class="option-features">
+                        <li>✓ 24/7 Availability</li>
+                        <li>✓ Quick Responses</li>
+                    <li>✓ File Sharing</li>
+                        <li>✓ Unlimited Duration</li>
+                    </ul>
+                    <div class="option-price">
+                        <span class="price">Rs. 800</span>
+                        <span class="duration">per consultation</span>
+                    </div>
+                    <button class="option-btn tertiary" onclick="scrollToForm('chat')">Start Chat</button>
+                </div>
+                
+                <div class="option-card typewriter-left anim-delay-5">
+                    <div class="option-icon">🏥</div>
+                    <h3>In-Person Visit</h3>
+                    <p>Traditional office visits at our consultation center in Colombo for comprehensive examinations.</p>
+                    <ul class="option-features">
+                        <li>✓ Physical Examination</li>
+                        <li>✓ Lab Tests Available</li>
+                        <li>✓ Specialist Referrals</li>
+                        <li>✓ 45-60 min sessions</li>
+                    </ul>
+                    <div class="option-price">
+                        <span class="price">Rs. 2,500</span>
+                        <span class="duration">per consultation</span>
+                    </div>
+                    <button class="option-btn primary" onclick="scrollToForm('inperson')">Book Office Visit</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Appointments Content -->
+    <section class="appointments-content">
+        <div class="container">
+            <div class="appointments-grid">
+                <!-- Booking Form -->
+                <div class="booking-form">
+                    <h2 class="typewriter">Schedule Your Appointment</h2>
+                    <p class="form-desc typewriter-left anim-delay-1">Follow these simple steps to book your consultation. Our team will confirm your appointment within 2 hours.</p>
+                    
+                    <div class="booking-steps">
+                        <div class="step-item">
+                            <div class="step-number">1</div>
+                            <div class="step-content">
+                                <h4>Choose Your Consultation Type</h4>
+                                <p>Select from video, phone, chat, or in-person consultations based on your preference and needs.</p>
+                            </div>
+                        </div>
+                        <div class="step-item">
+                            <div class="step-number">2</div>
+                            <div class="step-content">
+                                <h4>Select Your Doctor</h4>
+                                <p>Choose from our network of board-certified specialists and general practitioners.</p>
+                            </div>
+                        </div>
+                        <div class="step-item">
+                            <div class="step-number">3</div>
+                            <div class="step-content">
+                                <h4>Pick Date & Time</h4>
+                                <p>Choose from available slots that work best with your schedule.</p>
+                            </div>
+                        </div>
+                        <div class="step-item">
+                            <div class="step-number">4</div>
+                            <div class="step-content">
+                                <h4>Complete & Confirm</h4>
+                                <p>Fill in your details, describe your concerns, and submit to receive confirmation.</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <form id="appointmentForm">
+                        <div class="form-row">
+                        <div class="form-group">
+                                <label for="name">Full Name *</label>
+                                <input type="text" id="name" name="name" placeholder="Enter your full name" required>
+                        </div>
+                        
+                        <div class="form-group">
+                                <label for="phone">Phone Number *</label>
+                                <input type="tel" id="phone" name="phone" placeholder="+94 XX XXX XXXX" required>
+                            </div>
+                        </div>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="email">Email Address *</label>
+                                <input type="email" id="email" name="email" placeholder="your.email@example.com" required>
+                        </div>
+                        
+                        <div class="form-group">
+                                <label for="consultation-type">Consultation Type *</label>
+                                <select id="consultation-type" name="consultation-type" required>
+                                    <option value="">Select consultation type</option>
+                                    <option value="video">Video Consultation (Rs. 1,500)</option>
+                                    <option value="phone">Phone Consultation (Rs. 1,200)</option>
+                                    <option value="chat">Chat Consultation (Rs. 800)</option>
+                                    <option value="inperson">In-Person Visit (Rs. 2,500)</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="form-row">
+                        <div class="form-group">
+                                <label for="doctor">Select Doctor *</label>
+                            <select id="doctor" name="doctor" required>
+                                <option value="">Choose a doctor</option>
+                                <option value="dr-chen">Dr. Sarah Chen - General Practitioner</option>
+                                <option value="dr-rodriguez">Dr. Maria Rodriguez - Cardiologist</option>
+                                <option value="dr-kim">Dr. David Kim - Pediatrician</option>
+                                <option value="dr-watson">Dr. Emily Watson - Dermatologist</option>
+                                    <option value="dr-perera">Dr. Insith Perera - General Medicine</option>
+                                    <option value="dr-silva">Dr. Omer Silva - Internal Medicine</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                                <label for="urgency">Urgency Level</label>
+                                <select id="urgency" name="urgency">
+                                    <option value="routine">Routine Check-up</option>
+                                    <option value="followup">Follow-up Visit</option>
+                                    <option value="urgent">Urgent (Within 24hrs)</option>
+                                    <option value="emergency">Emergency (Immediate)</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="date">Preferred Date *</label>
+                                <input type="date" id="date" name="date" required>
+                        </div>
+                        
+                        <div class="form-group">
+                                <label for="time">Preferred Time *</label>
+                            <select id="time" name="time" required>
+                                <option value="">Select time</option>
+                                    <option value="08:00">8:00 AM</option>
+                                <option value="09:00">9:00 AM</option>
+                                <option value="10:00">10:00 AM</option>
+                                <option value="11:00">11:00 AM</option>
+                                    <option value="12:00">12:00 PM</option>
+                                <option value="14:00">2:00 PM</option>
+                                <option value="15:00">3:00 PM</option>
+                                <option value="16:00">4:00 PM</option>
+                                    <option value="17:00">5:00 PM</option>
+                            </select>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group full-width">
+                            <label for="reason">Reason for Visit *</label>
+                            <textarea id="reason" name="reason" placeholder="Please describe your symptoms, concerns, or reason for consultation in detail..." required></textarea>
+                        </div>
+                        
+                        <div class="form-group full-width">
+                            <label for="medical-history">Medical History (Optional)</label>
+                            <textarea id="medical-history" name="medical-history" placeholder="Any relevant medical history, allergies, or current medications..."></textarea>
+                        </div>
+                        
+                        <div class="form-group full-width">
+                            <label class="checkbox-label">
+                                <input type="checkbox" name="terms" required>
+                                <span class="checkmark"></span>
+                                I agree to HelloDoc's <a href="#" class="terms-link">Terms of Service</a> and <a href="#" class="terms-link">Privacy Policy</a>
+                            </label>
+                        </div>
+                        
+                        <button type="submit" class="submit-btn">Book Appointment</button>
+                    </form>
+                </div>
+                
+                <!-- Appointment Information -->
+                <div class="appointment-info">
+                    <h2>What to Expect</h2>
+                    
+                    <div class="info-item">
+                        <div class="info-icon"><img src="images/services/calender.jpg" alt="Easy Scheduling"></div>
+                        <div class="info-content">
+                            <h3>Easy Scheduling</h3>
+                            <p>Book appointments at your convenience. Choose from available time slots that work best for you.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="info-item">
+                        <div class="info-icon"><img src="images/services/video_call.jpg" alt="Video Consultation"></div>
+                        <div class="info-content">
+                            <h3>Video Consultation</h3>
+                            <p>Connect with doctors through secure video calls. No need to travel or wait in waiting rooms.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="info-item">
+                        <div class="info-icon"><img src="images/services/pills.jpg" alt="Prescriptions & Referrals"></div>
+                        <div class="info-content">
+                            <h3>Prescriptions & Referrals</h3>
+                            <p>Receive prescriptions, referrals, and medical advice directly from licensed healthcare professionals.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="info-item">
+                        <div class="info-icon"><img src="images/services/lock.jpg" alt="Secure & Private"></div>
+                        <div class="info-content">
+                            <h3>Secure & Private</h3>
+                            <p>All consultations are HIPAA-compliant and conducted through encrypted, secure video platforms.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="info-item">
+                        <div class="info-icon"><img src="images/services/money.jpg" alt="Affordable Care"></div>
+                        <div class="info-content">
+                            <h3>Affordable Care</h3>
+                            <p>Transparent pricing starting from Rs. 1,500 per consultation. No hidden fees or surprise charges.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Appointment Confirmation Section (Initially Hidden) -->
+    <section class="confirmation-section" id="confirmationSection" style="display: none;">
+        <div class="container">
+            <div class="confirmation-card">
+                <h2>Appointment Confirmed!</h2>
+                <p>Thank you for booking with HelloDoc. Your appointment details are below:</p>
+                <div class="confirmed-details">
+                    <p><strong>Doctor:</strong> <span id="confirmDoctor"></span></p>
+                    <p><strong>Date:</strong> <span id="confirmDate"></span></p>
+                    <p><strong>Time:</strong> <span id="confirmTime"></span></p>
+                    <p><strong>Reason:</strong> <span id="confirmReason"></span></p>
+                </div>
+                <a href="video_call.html" class="cta-btn join-call-btn">Join Video Call</a>
+                <button class="cta-btn new-appointment-btn" onclick="location.reload()">Book New Appointment</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Available Doctors -->
+    <section class="doctors-section">
+        <div class="container">
+            <h2 style="text-align: center; font-size: 2.5rem; font-weight: 700; margin-bottom: 3rem; color: var(--text-dark);">Our Available Doctors</h2>
+            
+            <div class="doctors-grid">
+                <div class="doctor-card">
+                    <div class="doctor-avatar">
+                        <img src="images/members/83bc8b88cf6bc4b4e04d153a418cde62.jpg" alt="Dr. Sarah Chen" style="width: 100%; height: 100%; border-radius: 50%; object-fit: cover;">
+                    </div>
+                    <h3>Dr. Sarah Chen</h3>
+                    <div class="doctor-specialty">General Practitioner</div>
+                    <div class="doctor-rating">★★★★★</div>
+                    <div class="doctor-availability">Available: Mon-Fri, 9 AM - 5 PM</div>
+                    <button class="book-doctor-btn" onclick="selectDoctor('Dr. Sarah Chen')">Book with Dr. Chen</button>
+                </div>
+                
+                <div class="doctor-card">
+                    <div class="doctor-avatar">
+                        <img src="images/members/83bc8b88cf6bc4b4e04d153a418cde62.jpg" alt="Dr. Maria Rodriguez" style="width: 100%; height: 100%; border-radius: 50%; object-fit: cover;">
+                    </div>
+                    <h3>Dr. Maria Rodriguez</h3>
+                    <div class="doctor-specialty">Cardiologist</div>
+                    <div class="doctor-rating">★★★★★</div>
+                    <div class="doctor-availability">Available: Tue-Thu, 10 AM - 6 PM</div>
+                    <button class="book-doctor-btn" onclick="selectDoctor('Dr. Maria Rodriguez')">Book with Dr. Rodriguez</button>
+                </div>
+                
+                <div class="doctor-card">
+                    <div class="doctor-avatar">
+                        <img src="images/members/83bc8b88cf6bc4b4e04d153a418cde62.jpg" alt="Dr. David Kim" style="width: 100%; height: 100%; border-radius: 50%; object-fit: cover;">
+                    </div>
+                    <h3>Dr. David Kim</h3>
+                    <div class="doctor-specialty">Pediatrician</div>
+                    <div class="doctor-rating">★★★★★</div>
+                    <div class="doctor-availability">Available: Mon-Sat, 8 AM - 4 PM</div>
+                    <button class="book-doctor-btn" onclick="selectDoctor('Dr. David Kim')">Book with Dr. Kim</button>
+                </div>
+                
+                <div class="doctor-card">
+                    <div class="doctor-avatar">
+                        <img src="images/members/83bc8b88cf6bc4b4e04d153a418cde62.jpg" alt="Dr. Emily Watson" style="width: 100%; height: 100%; border-radius: 50%; object-fit: cover;">
+                    </div>
+                    <h3>Dr. Emily Watson</h3>
+                    <div class="doctor-specialty">Dermatologist</div>
+                    <div class="doctor-rating">★★★★★</div>
+                    <div class="doctor-availability">Available: Wed-Fri, 11 AM - 7 PM</div>
+                    <button class="book-doctor-btn" onclick="selectDoctor('Dr. Emily Watson')">Book with Dr. Watson</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-newsletter">
+                    <div class="logo">
+                        <img src="images/main/3.png" alt="HelloDoc Logo" class="logo-icon">
+                    </div>
+                    <p>Stay in the loop and sign up for the HelloDoc Newsletter</p>
+                    <div class="newsletter-form">
+                        <input type="email" placeholder="Enter your email">
+                        <button type="submit">→</button>
+                    </div>
+                </div>
+                
+                <div class="footer-links">
+                    <div class="link-column">
+                        <h4>Company</h4>
+                        <ul>
+                            <li><a href="index.html">Home</a></li>
+                            <li><a href="services.html">Services</a></li>
+                            <li><a href="about.html">About</a></li>
+                            <li><a href="contact.html">Contact</a></li>
+                        </ul>
+                    </div>
+                    <div class="link-column">
+                        <h4>Documentation</h4>
+                        <ul>
+                            <li><a href="help_centre.html">Help Centre</a></li>
+                            <li><a href="contact.html">Contact</a></li>
+                            <li><a href="faq.html">FAQ</a></li>
+                            <li><a href="privacy_policy.html">Privacy Policy</a></li>
+                        </ul>
+                    </div>
+                    <div class="link-column">
+                        <h4>Social</h4>
+                        <ul>
+                            <li><a href="#">Facebook</a></li>
+                            <li><a href="#">Instagram</a></li>
+                            <li><a href="#">Youtube</a></li>
+                            <li><a href="#">Twitter</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>© HelloDoc All Rights Reserved 2025</p>
+                <a href="#">Terms & Conditions</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Fixed Chatbot -->
+    <div class="fixed-chatbot">
+        <div class="chatbot-bubble">Hi! Want some assistance?</div>
+        <a href="ai_assistant.html" class="chatbot-icon">
+            <img src="images/main/7.png" alt="AI Assistant">
+        </a>
+    </div>
+
+    <script src="js/script.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Dynamic navigation logic
+            const accountBtn = document.querySelector('.account-btn');
+            const loggedInUser = JSON.parse(sessionStorage.getItem('loggedInUser'));
+            
+            if (loggedInUser) {
+                if (loggedInUser.role === 'admin') {
+                    accountBtn.textContent = 'ADMIN DASHBOARD';
+                    accountBtn.href = 'admin.html';
+                } else {
+                    accountBtn.textContent = `Hi, ${loggedInUser.firstName.toUpperCase()}`;
+                    accountBtn.href = '#'; // Placeholder for user profile page
+                }
+
+                // Add logout option
+                const nav = document.querySelector('header nav ul');
+                const logoutLi = document.createElement('li');
+                const logoutLink = document.createElement('a');
+                logoutLink.href = '#';
+                logoutLink.textContent = 'LOGOUT';
+                logoutLink.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    sessionStorage.removeItem('loggedInUser');
+                    alert('Logged out successfully.');
+                    window.location.href = 'index.html';
+                });
+                logoutLi.appendChild(logoutLink);
+                nav.appendChild(logoutLi);
+            } else {
+                accountBtn.textContent = 'MY ACCOUNT';
+                accountBtn.href = 'login.html';
+            }
+
+        // Appointment form functionality
+        document.getElementById('appointmentForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Get form data
+            const formData = new FormData(this);
+            const data = Object.fromEntries(formData);
+                
+                // Update confirmation section
+                document.getElementById('confirmDoctor').textContent = data.doctor;
+                document.getElementById('confirmDate').textContent = data.date;
+                document.getElementById('confirmTime').textContent = data.time;
+                document.getElementById('confirmReason').textContent = data.reason;
+                
+                // Hide form and show confirmation
+                document.querySelector('.appointments-content').style.display = 'none';
+                document.getElementById('confirmationSection').style.display = 'block';
+                
+                // Scroll to top to show confirmation
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            
+            // Simulate appointment booking
+                // alert('Appointment booked successfully!\n\nYou will receive a confirmation email with video call details shortly.');
+            
+                // Reset form (optional, as it's hidden)
+            this.reset();
+        });
+        
+        // Doctor selection functionality
+            window.selectDoctor = function(doctorName) {
+            document.getElementById('doctor').value = doctorName;
+            document.getElementById('doctor').focus();
+            
+            // Scroll to booking form
+            document.querySelector('.booking-form').scrollIntoView({ 
+                behavior: 'smooth' 
+            });
+        }
+        
+        // Set minimum date to today
+            const today = new Date().toISOString().split('T')[0];
+            document.getElementById('date').min = today;
+
+            // Pre-select doctor if passed in URL
+            const urlParams = new URLSearchParams(window.location.search);
+            const preselectedDoctor = urlParams.get('doctor');
+            if (preselectedDoctor) {
+                document.getElementById('doctor').value = preselectedDoctor;
+                document.querySelector('.appointments-content').scrollIntoView({ 
+                    behavior: 'smooth' 
+                });
+            }
+            
+            // Scroll to form function for appointment options
+            window.scrollToForm = function(type) {
+                // Pre-select consultation type
+                document.getElementById('consultation-type').value = type;
+                
+                // Scroll to booking form
+                document.querySelector('.appointments-content').scrollIntoView({ 
+                    behavior: 'smooth' 
+                });
+                
+                // Focus on the form
+                setTimeout(() => {
+                    document.getElementById('name').focus();
+                }, 1000);
+            }
+        });
+    </script>
+</body>
+</html>
