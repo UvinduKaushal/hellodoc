@@ -2681,10 +2681,15 @@ footer .container {
     overflow: hidden;
     box-shadow: 0 2px 10px rgba(0,0,0,0.1);
     transition: all 0.3s ease;
+    position: relative;
 }
 
 .faq-item:hover {
     box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+}
+
+.faq-item.active {
+    box-shadow: 0 6px 25px rgba(0,0,0,0.2);
 }
 
 .faq-question {
@@ -2695,10 +2700,17 @@ footer .container {
     align-items: center;
     background: var(--card-bg);
     transition: background-color 0.3s ease;
+    user-select: none;
+    outline: none;
 }
 
 .faq-question:hover {
     background: var(--primary-light);
+}
+
+.faq-question:focus {
+    background: var(--primary-light);
+    box-shadow: 0 0 0 2px var(--accent-blue);
 }
 
 .faq-question h3 {
@@ -2720,10 +2732,15 @@ footer .container {
 }
 
 .faq-answer {
-    max-height: 0;
-    overflow: hidden;
-    transition: max-height 0.3s ease;
+    display: none;
     background: var(--bg-light);
+    padding: 0;
+    overflow: hidden;
+    transition: all 0.3s ease;
+}
+
+.faq-item.active .faq-answer {
+    display: block;
 }
 
 .faq-answer p {

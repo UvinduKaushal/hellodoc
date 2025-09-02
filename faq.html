@@ -216,32 +216,75 @@
 
     <script src="js/script.js"></script>
     <script>
-        // FAQ Toggle Functionality
+        // FAQ Toggle Functionality - Simplified Version
         document.addEventListener('DOMContentLoaded', function() {
-            const faqItems = document.querySelectorAll('.faq-item');
+            console.log('FAQ script loaded');
             
-            faqItems.forEach(item => {
+            // Get all FAQ items
+            const faqItems = document.querySelectorAll('.faq-item');
+            console.log('Found FAQ items:', faqItems.length);
+            
+            // Add click event to each FAQ question
+            faqItems.forEach(function(item, index) {
                 const question = item.querySelector('.faq-question');
                 const answer = item.querySelector('.faq-answer');
                 const toggle = item.querySelector('.faq-toggle');
                 
-                question.addEventListener('click', () => {
-                    const isActive = item.classList.contains('active');
+                if (question && answer && toggle) {
+                    console.log('Setting up FAQ item:', index);
                     
-                    // Close all other FAQ items
-                    faqItems.forEach(otherItem => {
-                        otherItem.classList.remove('active');
-                        otherItem.querySelector('.faq-answer').style.maxHeight = '0';
-                        otherItem.querySelector('.faq-toggle').textContent = '+';
+                    // Set initial state
+                    answer.style.display = 'none';
+                    
+                    // Add click event
+                    question.addEventListener('click', function() {
+                        console.log('FAQ item clicked:', index);
+                        
+                        const isOpen = answer.style.display === 'block';
+                        
+                        // Close all other answers
+                        faqItems.forEach(function(otherItem) {
+                            const otherAnswer = otherItem.querySelector('.faq-answer');
+                            const otherToggle = otherItem.querySelector('.faq-toggle');
+                            const otherQuestion = otherItem.querySelector('.faq-question');
+                            
+                            if (otherItem !== item) {
+                                otherAnswer.style.display = 'none';
+                                otherItem.classList.remove('active');
+                                otherToggle.textContent = '+';
+                                otherQuestion.style.background = '';
+                            }
+                        });
+                        
+                        // Toggle current answer
+                        if (isOpen) {
+                            answer.style.display = 'none';
+                            item.classList.remove('active');
+                            toggle.textContent = '+';
+                            question.style.background = '';
+                        } else {
+                            answer.style.display = 'block';
+                            item.classList.add('active');
+                            toggle.textContent = '−';
+                            question.style.background = 'var(--primary-light)';
+                        }
                     });
                     
-                    // Toggle current item
-                    if (!isActive) {
-                        item.classList.add('active');
-                        answer.style.maxHeight = answer.scrollHeight + 'px';
-                        toggle.textContent = '−';
-                    }
-                });
+                    // Add keyboard support
+                    question.addEventListener('keydown', function(e) {
+                        if (e.key === 'Enter' || e.key === ' ') {
+                            e.preventDefault();
+                            question.click();
+                        }
+                    });
+                    
+                    // Make question focusable
+                    question.setAttribute('tabindex', '0');
+                    question.setAttribute('role', 'button');
+                    question.setAttribute('aria-expanded', 'false');
+                    question.setAttribute('aria-controls', 'faq-answer-' + index);
+                    answer.setAttribute('id', 'faq-answer-' + index);
+                }
             });
         });
     </script>
